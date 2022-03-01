@@ -1,0 +1,23 @@
+a) 
+    1st
+    2nd
+    3rd
+    4th
+    5th
+
+b)
+    5th
+    4th
+    3rd
+    2nd
+    1st
+
+c)
+    1st 
+    2nd 
+    3rd
+    4th
+    5th
+
+d)
+    
