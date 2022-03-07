@@ -1,22 +1,26 @@
 #include <stdio.h>
 
-void factorial(int n);
+int factorial(int n);
 
-int main(void)
+int main()
 {
-    int userIn;
+    int userIn, total;
     do 
     {
         printf("\nEnter an integer: ");
         scanf("%d", &userIn);
         if (userIn > 0)
         {
-            factorial(userIn);
+            total = factorial(userIn);
+            printf("The total is: %d", total);
         }
     } while (userIn > 0);
+    
+    return 0;
 }
 
-void factorial(int n)
+
+int factorial(int n)
 {
     int total = n; 
     int i = n - 1;
@@ -24,5 +28,5 @@ void factorial(int n)
     {
         total = total * i;
     }
-    printf("The total is: %d", total);
+    return total;
 }
