@@ -1,0 +1,26 @@
+1a) 
+    Missing * to make it a pointer, cannot initialise an integer to NULL.
+    Should be int* value = NULL;
+1b)
+    The pointer must be initialised and given a memory address before it can
+    be pointed to a value.
+1c)
+    The pointer must be initialised and given a memory address before it can
+    be pointed to a value.
+1d)
+    A pointer of type pointer must point towards another pointer. 
+    The char** must become char*, or the char ch should become a pointer.
+1e)
+    A void pointer can be assigned to any data type without type casting.
+    The correct code would be:
+    
+    double value = 42.0;
+    void* pointer = &value;
+    *pointer = 84;
+1f)
+    
+1g)
+    
+
+1a)
+    

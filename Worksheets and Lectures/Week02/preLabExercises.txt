@@ -1,0 +1,20 @@
+1
+    a)  Will include the standard header file from a pre-defined directory.
+    b)  Will include your own header files in the current directory.
+    c)  Assigns a name to a constant value, eg. wherever LENGTH occurs, it is replaced with 100.
+    d)  Allows a small snippet of code to work. Can simply RETURN CUBE instead of calculating it.
+    e)  Will take the input numbers and output the result.
+    f)  Will only print LENGTH if it has been defined.
+    g)  If THEFILE is not defined, then it will be defined, and the function f will be created.
+
+2
+    a)  They are accessible from all functions and possibly across source files. Creates issues with security and coupling.
+    b)  Static functions are only used within one file, so declaring them in the header file makes them no longer static.
+
+3
+    a)  main.c includes database.h and util.h
+    b)  util.c, interface.c, database.c and main.c include util.h
+    c)  main.o  database.o  util.o  interface.o
+    d)  main.o  database.o
+    e)  util.o  interface.o database.o  main.o
+    f)  util.o
