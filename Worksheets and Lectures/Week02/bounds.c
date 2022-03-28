@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "macros.h"
+#define BETWEEN(a, b, c)  (((a) > (b)) && ((a) < (c)))
 
 int checkInt(int low, int high, int val);
 int checkDbl(double low, double high, double val);
@@ -74,26 +75,12 @@ int checkInt(int low, int high, int val)
 
 int checkDbl(double low, double high, double val)
 {
-    int bool = FALSE;
-    if (val > low)
-    {
-        if (val < high)
-        {
-            bool = TRUE;
-        }
-    }
+    int bool = BETWEEN(high, low, val);
     return bool;
 }
 
 int checkChar(char low, char high, char val)
 {
-    int bool = FALSE;
-    if (val > low)
-    {
-        if (val < high)
-        {
-            bool = TRUE;
-        }
-    }
+    int bool = BETWEEN(high, low, val);
     return bool;
 }

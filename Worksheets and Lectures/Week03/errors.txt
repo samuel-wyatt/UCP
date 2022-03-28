@@ -1,0 +1,21 @@
+./memerrors 1
+    Unitialised value was created by a stack allocation
+    test1 (38)
+
+./memerrors 2
+    Unitialised value was created by a stack allocation
+    test2 (47)
+
+./memerrors 3
+    4 bytes in 1 block are definitely lost in loss record 1 of 1
+    test2 (55)
+
+./memerrors 4
+    Invalid free() 
+    test4 (61, 62, 63)
+
+./memerrors 5
+    Invalid write of size 4
+    test5 (69, 70, 71)
+
+
