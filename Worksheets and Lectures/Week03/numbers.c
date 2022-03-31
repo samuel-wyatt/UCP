@@ -8,6 +8,7 @@ int main() {
     char *chPtr;
     int v1, v2, v3;
     char c1;
+    void (*ptr4)(int*, int*, int*);
 
     /* Assign the pointers to store the memory addresses of the variables. */ 
     ptr1 = &v1;
@@ -20,7 +21,8 @@ int main() {
 
     /* Call ascending(3) with unsorted integers. */
     printf("\nPre-sort: %d , %d, %d\n", *ptr1, *ptr2, *ptr3);
-    order(c1);
+    ptr4 = order(c1);
+    ptr4(ptr1, ptr2, ptr3);
     printf("Post-sort: %d , %d , %d\n", *ptr1, *ptr2, *ptr3);
 
     return 0;
