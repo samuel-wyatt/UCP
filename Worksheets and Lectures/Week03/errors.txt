@@ -17,5 +17,3 @@
 ./memerrors 5
     Invalid write of size 4
     test5 (69, 70, 71)
-
-

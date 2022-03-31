@@ -1,18 +1,19 @@
 #include <stdio.h>
 #include "macros.h"
-#define BETWEEN(a, b, c)  (((a) > (b)) && ((a) < (c)))
+#include "powers.h"
 
 int checkInt(int low, int high, int val);
 int checkDbl(double low, double high, double val);
 int checkChar(char low, char high, char val);
+int power(int val);
 
 int main(void)
 {
-    int lowInt, highInt, valInt, intBool, menu;
+    int lowInt, highInt, valInt, intBool, menu, answer;
     double lowDbl, highDbl, valDbl;
     char lowChar, highChar, valChar;
     
-    printf("1. Integer\n2. Double\n3. Character\nSelection:\t");
+    printf("1. Integer\n2. Double\n3. Character\n4. Powers\nSelection:\t");
     scanf("%d", &menu);
 
     switch (menu)
@@ -64,23 +65,45 @@ int main(void)
         intBool = checkChar(lowChar, highChar, valChar);
         printf("\n1 = True\n0 = False\ncheckChar is: %d\n", intBool);
         break;
+
+        case 4:
+        /* Value entering. */
+        printf("------Powers-----\n");
+        printf("Please enter the number between 1 and 31: ");
+        scanf("%d", &valInt);
+        answer = power(valInt);
+        printf("The powers of 2 up to %d is %d\n", valInt,answer);
     }
 }
 
 int checkInt(int low, int high, int val)
 {
-    int bool = BETWEEN(high, low, val);
+    int bool = BETWEEN(low, high, val);
     return bool;
 }
 
 int checkDbl(double low, double high, double val)
 {
-    int bool = BETWEEN(high, low, val);
+    int bool = BETWEEN(low, high, val);
     return bool;
 }
 
 int checkChar(char low, char high, char val)
 {
-    int bool = BETWEEN(high, low, val);
+    int bool = BETWEEN(low, high, val);
     return bool;
+}
+
+int power(int val)
+{
+    int power = 0;
+    if (BETWEEN(1, 31, val) == TRUE) {
+        int i;
+        for (i = 0; i < val; i ++) {
+            power = powers();
+        }
+    } else {
+        printf("Invalid Input: Integer was not between 1 and 31.");
+    }
+    return power;
 }

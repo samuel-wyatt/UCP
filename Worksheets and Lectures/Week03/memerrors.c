@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
 
 void test1()
 {
-    int var;
+    int var = 1;
     if(var > 0)
         printf(">0\n");
     else
@@ -45,7 +45,7 @@ void test1()
 
 void test2()
 {
-    int var;
+    int var = 0;
     printf("%d\n", var);
 }
 
@@ -53,6 +53,7 @@ void test3()
 {
     int *ptr;
     ptr = (int*)malloc(sizeof(int));
+    free(ptr);
 }
 
 void test4() 
@@ -60,13 +61,12 @@ void test4()
     int *ptr;
     ptr = (int*)malloc(sizeof(int));
     free(ptr);
-    free(ptr);
 }
 
 void test5() 
 {
     int *ptr;
     ptr = (int*)malloc(sizeof(int));
-    free(ptr);
     *ptr = 50;
+    free(ptr);
 }
