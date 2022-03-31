@@ -19,13 +19,9 @@ int main() {
     readInts(ptr1, ptr2, ptr3, chPtr);
 
     /* Call ascending(3) with unsorted integers. */
-    printf("\nPre-Ascending(3) sort: %d , %d, %d\n", *ptr1, *ptr2, *ptr3);
-    ascending3(ptr1, ptr2, ptr3);
-    printf("Post-Ascending(3) sort: %d , %d , %d\n", *ptr1, *ptr2, *ptr3);
+    printf("\nPre-sort: %d , %d, %d\n", *ptr1, *ptr2, *ptr3);
+    order(c1);
+    printf("Post-sort: %d , %d , %d\n", *ptr1, *ptr2, *ptr3);
 
-    /* Call descending(3) with already ascending integers (reverse order). */
-    printf("\nPre-Descending(3) sort: %d , %d, %d\n", *ptr1, *ptr2, *ptr3);
-    descending3(ptr1, ptr2, ptr3);
-    printf("Post-Descending(3) sort: %d , %d , %d\n", *ptr1, *ptr2, *ptr3);
     return 0;
 }

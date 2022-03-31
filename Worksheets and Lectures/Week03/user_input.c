@@ -18,10 +18,5 @@ void readInts(int *ptr1, int *ptr2, int *ptr3, char *ptr4) {
 
     printf("Enter A or D: ");
     scanf(" %c", &v4);
-    if (v4 == 'A' || v4 == 'D') {
-        *ptr4 = v4;
-    } else {
-        printf("Invalid\n");
-        exit(0);  
+    *ptr4 = v4;
     }
-}
