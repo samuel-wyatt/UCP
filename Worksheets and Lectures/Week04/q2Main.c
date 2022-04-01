@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include "question2.h"
-
+#include "q2Main.h"
 int main(void) {
     /* Initialise variables and array. */
-    int i, sumArr, maxIdx;
+    int sumArr, maxIdx;
     static int LENGTH = 5;
     int array[] = {3, 5, 10, 46, 8};
+    int intArray[5];
+    char *charArray[] = {"5", "10", "15", "20", "25"};
     
     /* Call sum to find the sum of the array elements. */
     sumArr = sum(array, LENGTH);
@@ -19,10 +21,15 @@ int main(void) {
 
     /* Call reverse to reverse the array. */
     reverse(array, LENGTH);
-    /* Print the reversed array, should be [8, 46, 10, 5, 3]. */
-    for (i = 0; i < LENGTH; i++) {
-        printf("%d , ", array[i]);
-    }
-    printf("\n");
+
+    /* Display the reversed array. */
+    printArr(array, LENGTH);
+
+    /* Call strToInt to turn array of strings into ints. */
+    strToInt(charArray, intArray, LENGTH);
+
+    /* Call printArr to display the intArray. */
+    printArr(intArray, LENGTH);
+
     return 0;
 }

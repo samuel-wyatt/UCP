@@ -30,5 +30,17 @@ void reverse(int array[], int length) {
 }
 
 void strToInt(char *charArray[], int intArray[], int length) {
-    
+    int i;
+    for (i = 0; i < length; i++) {
+        intArray[i] = atoi(charArray[i]);
+    }
+}
+
+void printArr(int array[], int length) {
+    int i;
+    printf("{");
+    for (i = 0; i < length - 1; i++) {
+        printf("%d, ", array[i]);
+    }
+    printf("%d}\n", array[length - 1]);
 }
