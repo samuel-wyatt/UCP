@@ -25,15 +25,13 @@ void descending3(int *ptr1, int *ptr2, int *ptr3) {
 }
 
 void (*order(char input))(int*, int*, int*) {
+    void (*ptr1)(int*, int*, int*);
     if (input == 'A') {
-        void (*ptr1)(int*, int*, int*);
         ptr1 = &ascending3;
-        return ptr1;
     } else if (input == 'D') {
-        void (*ptr2)(int*, int*, int*);
-        ptr2 = &descending3;
-        return ptr2;
+        ptr1 = &descending3;
     } else {
-        return NULL;
+        ptr1 =  NULL;
     }
+    return ptr1;
  }

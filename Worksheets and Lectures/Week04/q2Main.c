@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include "question2.h"
-#include "q2Main.h"
 int main(void) {
     /* Initialise variables and array. */
     int sumArr, maxIdx;
     static int LENGTH = 5;
-    int array[] = {3, 5, 10, 46, 8};
+    int array[] = {2, 8, 6, 4};
     int intArray[5];
     char *charArray[] = {"5", "10", "15", "20", "25"};
     
