@@ -1,16 +1,16 @@
 CC = gcc
 CFLAGS = -Wall -Werror -ansi -pedantic
 EXEC = program
-OBJ = cmdLine.o question2.o
+OBJ = cmdLine.o functions.o
 
 $(EXEC) : $(OBJ)
 	$(CC) $(OBJ) -o $(EXEC)
 
-cmdLine.o : cmdLine.c
+cmdLine.o : cmdLine.c 
 	$(CC) -c cmdLine.c $(CFLAGS)
 
-question2.o : question2.c
-	$(CC) -c question2.c $(CFLAGS)
+functions.o : functions.c
+	$(CC) -c functions.c $(CFLAGS)
 
 clean : 
 	rm -f $(EXEC) *.o

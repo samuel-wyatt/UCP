@@ -51,15 +51,19 @@ void lowerUpper(char *array) {
     /*Change type to equal: 1. Using strlen().
                             2. Not using strlen().
                             3. Not using array indexing. */
-    int type = 1;
+    int type = 3;
     int length;
     int i;
+    int lower;
 
     switch(type) {
         case 1:
             length = strlen(array);
+
             for (i = 0; i < length; i++) {
+
                 if ((array[i] > 96) && (array[i] < 123)) {
+
                     array[i] = array[i] - 32;
                 }
             }
@@ -67,7 +71,9 @@ void lowerUpper(char *array) {
         case 2:
             i = 0;
             while (array[i + 1] != '\0') {
+
                 if ((array[i] > 96) && (array[i] < 123)) {
+
                     array[i] = array[i] - 32;
                 }
                 i += 1;
@@ -75,7 +81,15 @@ void lowerUpper(char *array) {
 
         break;
         case 3:
-
+            i = 0;
+            while (*(array + i) != '\0') {
+                
+                if (*(array + i) > 96 && *(array + i) < 123) {
+                    lower = *(array + i) - 32;
+                    *(array + i) = lower;
+                }
+                i += 1;
+            }
         break;
     }
 }
