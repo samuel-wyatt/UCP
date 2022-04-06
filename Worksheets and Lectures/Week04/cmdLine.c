@@ -10,7 +10,7 @@ int main(int args, char* argv[]) {
     char *argument = argv[1];
 
     if (args < 3) {
-        printf("ERROR: No/not enough argument(s) were provided.");
+        printf("ERROR: No/not enough argument(s) were provided.\n");
 
     } else {
         do {
@@ -21,22 +21,22 @@ int main(int args, char* argv[]) {
             count += 1;
         } while (count != 2);
         length = args - 2;
-        printf("%d\n", length);
 
         strToInt(argv, array, length);
 
         if (strcmp(argument, "sum") == 0) {
-            printf("%d\n", sum(array, MAXLENGTH));
+            printf("%d\n", sum(array, length));
 
         } else if (strcmp(argument, "max") == 0) {
-            printf("%d\n", max(array, MAXLENGTH));
+            printf("%d\n", max(array, length));
 
         } else if (strcmp(argument, "reverse") == 0) {
-            reverse(array, MAXLENGTH);
-            printArr(array, MAXLENGTH);
+            reverse(array, length);
+            printArr(array, length);
 
         } else {
-            printf("Invlaid argument.");
+            printf("Invalid argument.\n");
         }    
     }
+    return 1;
 }

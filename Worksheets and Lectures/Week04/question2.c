@@ -4,13 +4,13 @@
 int sum(int array[], int length) {
     int i, answer = 0;
     for (i = 0; i < length; i++) {
-        answer = answer + array[i];
+        answer += array[i];
     }
     return answer;
 }
 
 int max(int array[], int length) {
-    int i, index, highest = 0;
+    int i, index = 0, highest = 0;
     for (i = 0; i < length; i++) {
         if (array[i] > highest) {
             highest = array[i];
