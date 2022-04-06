@@ -3,11 +3,12 @@
 #include <string.h>
 #include "functions.h"
 
+void usage();
+
 int main(int args, char* argv[]) {
 
     int i, count = 0; 
     int length = atoi(argv[2]);
-
     char *argument = argv[1];
     int *array = (int*)malloc(length*sizeof(1));
 
@@ -19,8 +20,7 @@ int main(int args, char* argv[]) {
     } while (count != 3);
 
     if (args < 4) {
-        printf("ERROR: No/not enough argument(s) were provided.\n");
-
+        usage();
     } else {
         strToInt(argv, array, length);
         lowerUpper(argument);
@@ -36,9 +36,14 @@ int main(int args, char* argv[]) {
             printArr(array, length);
 
         } else {
-            printf("Invalid argument.\n");
+            printf("Invalid argument(s).\n");
         }    
     }
     free(array);
     return 1;
+}
+
+void usage() {
+    printf("USAGE: ./program <function name> <length of array> n n1 n2 n3 n4 n5 n6 ...");
+    printf("\n\t--n being the integers to use, seperated by spaces.\n");
 }
