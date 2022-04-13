@@ -1,0 +1,23 @@
+1.
+    a) printf ("---%-4d---%+4d---", 23, 46);
+
+        answer = ---23  --- +46---
+
+    b) printf("x=%6.3f, y=%6.3f", 1.23, 216.0);
+
+        answer = x= 1.230, y=216.000
+
+2.
+    a) scanf("%s %s", c1, c2);
+
+    b) scanf("%d:%d:%d %s", &hours, &minutes, &seconds, ampm);
+
+    c) scanf("%c%d° %d' %lf\" %c%d° %d' %lf\"", &NS, &nDeg, &nMin, &nSec, &EW, &sDeg, &sMin, &sSec);
+
+3.
+    a) while (fscanf(fPtr, " %d", &n) == 1)
+
+    b) fscanf reads until the nextr whitespace, fgets read until the next newline.
+
+    c) It becomes very easy to read past the end of the line/file. You could read until eof is reached, or until a delimiter token is reached.
+    
