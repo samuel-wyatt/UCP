@@ -6,7 +6,7 @@
 
 int main(int args, char **argv) {
     /* Initiailise variables*/
-    int row_map, col_map, snake_length, proceed, i, a, b;
+    int row_map, col_map, snake_length, proceed, i;
     char **map = NULL;
     char *snake = NULL;
 
@@ -69,9 +69,11 @@ int main(int args, char **argv) {
     }
 
     /* Create the map and place the food*/
-    createGame(row_map, col_map, snake_length, map);
+    createGame(row_map, col_map, snake_length, map, snake);
 
-    
+    for (i = 0; i < snake_length; i++) {
+        printf("%c", snake[i]);
+    }
     
     /* Free entire 2d array*/
     for (i = 0; i < row_map + 2; i++) {

@@ -3,7 +3,12 @@
 #include "random.h"
 #include "array.h"
 
-void createGame(int row, int col, int snakeLength, char **map) {
+void createGame(int row, int col, int snakeLength, char **map, char *snake) {
+    createBorder(row, col, map);
+    placeFood(row, col, snakeLength, map);
+}
+
+void createBorder(int row, int col, char **map) {
     /* Initialise variables*/
     int i, ii;
 
@@ -30,22 +35,30 @@ void createGame(int row, int col, int snakeLength, char **map) {
     for (i = 0; i < col; i++) {
         map[row - 1][i] = WALL;
     }
-    placeFood(row, col, snakeLength, map);
 }
 
-void placeFood(int nRow, int nCol, int snakeLength, char** map) {
+void placeFood(int row, int col, int snakeLength, char** map) {
     /* Initialise variables*/
     int randR, randC;
 
     /* Generates coordinates for food placement, ensuring it is not placed on a border, or the snake*/
-    randR = random(1, nRow);
+    randR = random(1, row);
     if (randR == 1) {
-        randC = random((snakeLength + 1), nCol);
+        randC = random((snakeLength + 1), col);
     } else {
-        randC = random(1, nCol);
+        randC = random(1, col);
     }
-
     /*Replace that coordinate with @*/
     map[randR][randC] = FOOD;
+}
+
+void createSnake(int snakeLength, char **map, char *snake) {
+    int i;
+    map[1][snakeLength] = snake;
+    snake[0] = '#';
+    snake[snakeLength - 1] = '>';
+    for (i = 1; i < snakeLength - 1; i++) {
+        snake[i] = '-';
+    }
 }
 

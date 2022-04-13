@@ -17,13 +17,19 @@ void game(map, snake) {
                 
             break;
             case 'a':
-                head = '<';
+                if (head != '>') {
+                    head = '<';
+                }
             break;
             case 's':
-                head = 'v';
+                if (head != '^') {
+                    head = 'v';
+                }
             break;
             case 'd':
-                head = '>';
+                if (head != '<') {
+                    head = '>';
+                }
             break;
         }
 
