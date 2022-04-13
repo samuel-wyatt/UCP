@@ -3,7 +3,7 @@
 #include "random.h"
 #include "array.h"
 
-void createBorder(int row, int col, char **map) {
+void createGame(int row, int col, int snakeLength, char **map) {
     /* Initialise variables*/
     int i, ii;
 
@@ -30,13 +30,22 @@ void createBorder(int row, int col, char **map) {
     for (i = 0; i < col; i++) {
         map[row - 1][i] = WALL;
     }
+    placeFood(row, col, snakeLength, map);
 }
 
-void placeFood(int nRow, int nCol, char** map) {
+void placeFood(int nRow, int nCol, int snakeLength, char** map) {
     /* Initialise variables*/
-    int row = nRow - 2; 
-    int col = nCol - 2;
-    
+    int randR, randC;
+
+    /* Generates coordinates for food placement, ensuring it is not placed on a border, or the snake*/
+    randR = random(1, nRow);
+    if (randR == 1) {
+        randC = random((snakeLength + 1), nCol);
+    } else {
+        randC = random(1, nCol);
+    }
+
     /*Replace that coordinate with @*/
-    map[random(1, row)][random(1, col)] = FOOD;
+    map[randR][randC] = FOOD;
 }
+

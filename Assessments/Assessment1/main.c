@@ -8,6 +8,7 @@ int main(int args, char **argv) {
     /* Initiailise variables*/
     int row_map, col_map, snake_length, proceed, i, a, b;
     char **map = NULL;
+    char *snake = NULL;
 
     /* Check for correct usage*/
     if (args < 4) {
@@ -17,7 +18,6 @@ int main(int args, char **argv) {
 
     /* Call initRandom*/
     initRandom();
-
 
     /* Assign command line input to variables*/
     row_map = atoi(argv[1]);
@@ -59,21 +59,21 @@ int main(int args, char **argv) {
         return 1;   
     }
 
-    /* Create array*/
-    createBorder(row_map, col_map, map);
+    /*Initialise the snake*/
+    snake = malloc(snake_length * sizeof(char));
 
-    /* Place the food on the map*/
-    placeFood(row_map, col_map, map);
-
-    /*Print the array TESTING*/
-    for (a = 0; a < row_map + 2; a++) {
-        for (b = 0; b < col_map + 2; b++) {
-            printf("%c", map[a][b]);
-        }
-        printf("\n");
+    /* Check if memory allocation failed*/
+    if (snake == NULL) {
+        printf("ERROR: Memory allocation failed");
+        return 1;
     }
+
+    /* Create the map and place the food*/
+    createGame(row_map, col_map, snake_length, map);
+
     
-    /* Free entire 2s array*/
+    
+    /* Free entire 2d array*/
     for (i = 0; i < row_map + 2; i++) {
         free(map[i]);
     }

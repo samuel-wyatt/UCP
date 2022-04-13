@@ -6,5 +6,5 @@
 #define WALL '*'
 #endif
 
-void createBorder(int row, int col, char **map);
-void placeFood(int nRow, int nCol, char **map);
+void createGame(int row, int col, int snakeLength, char **map);
+void placeFood(int nRow, int nCol, int snakeLength, char **map);
