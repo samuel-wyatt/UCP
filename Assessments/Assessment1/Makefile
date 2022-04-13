@@ -1,6 +1,6 @@
 CC = gcc
 EXEC = snake
-OBJ = main.o array.o
+OBJ = main.o array.o random.o
 CFLAGS = -Wall -Werror -ansi -pedantic
 
 $(EXEC) : $(OBJ)
@@ -9,8 +9,11 @@ $(EXEC) : $(OBJ)
 main.o : main.c array.h
 	$(CC) -c main.c $(CFLAGS)
 
-array.o : array.c
+array.o : array.c array.h random.h
 	$(CC) -c array.c $(CFLAGS)
+
+random.o : random.h
+	$(CC) -c random.c $(CFLAGS)
 
 clean :
 	rm -f $(EXEC) *.o

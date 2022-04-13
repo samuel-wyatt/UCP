@@ -6,5 +6,5 @@
 #define WALL '*'
 #endif
 
-void createArray(int row, int col, char ***map);
+void createArray(int row, int col, char **map);
 void placeFood(int nRow, int nCol, char **map);

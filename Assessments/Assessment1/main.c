@@ -4,11 +4,21 @@
 
 int main(int args, char **argv) {
     /* Initiailise variables*/
-    int row_map, col_map, snake_length, proceed;
+    int row_map = atoi(argv[1]);
+    int col_map = atoi(argv[2]);
+    int snake_length = atoi(argv[3]);  
+    int proceed, i;
     char **map;
-    int i;
 
+    int a, b;
+
+    /* Dynamically allocated array of char pointer pointers named map*/
+    map = malloc((atoi(argv[1]) + 2) * sizeof(char*));
     
+    /* Allocate a char pointer arra1y for each element of map*/
+    for (i = 0; i < atoi(argv[1]) - 1; i++) {
+        map[i] = malloc((atoi(argv[2]) + 2) * sizeof(char));
+    }
 
     /* Check for correct usage*/
     if (args < 4) {
@@ -46,9 +56,15 @@ int main(int args, char **argv) {
     }
 
     /* Create array*/
-    createArray(row_map, col_map, &map);
+    createArray(row_map, col_map, map);
     
-    for(i = 0; i < row_map + 2; i++) {
+    for (a = 0; a < row_map + 2; a++) {
+        for (b = 0; b < col_map; b++) {
+            printf("%c", map[a][b]);
+        }
+    }
+
+    for (i = 0; i < row_map + 2; i++) {
         free(map[i]);
     }
     free(map);

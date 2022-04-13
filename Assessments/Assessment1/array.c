@@ -3,17 +3,9 @@
 #include "random.h"
 #include "array.h"
 
-void createArray(int row, int col, char ***map) {
+void createArray(int row, int col, char **map) {
     /* Initialise variables*/
     int i;
-
-    /* Dynamically allocated array of char pointer pointers named map*/
-    map = malloc((row + 2) * sizeof(char*));
-    
-    /* Allocate a char pointer array for each element of map*/
-    for (i = 0; i < row -1; i++) {
-        map[i] = malloc((col + 2) * sizeof(char));
-    }
 
     /* Account for borders*/
     col += 2;
