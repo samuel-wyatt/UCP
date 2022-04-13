@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "array.h"
+#include "random.h"   
 
 int main(int args, char **argv) {
     /* Initiailise variables*/
     int row_map, col_map, snake_length, proceed;
-    char **gameArray;
-    int i, a;
 
     /* Check for correct usage*/
     if (args < 4) {
@@ -43,14 +42,18 @@ int main(int args, char **argv) {
         return 1;
     }
 
+    /*TEST*/
+    printf("before map creation.");
+
     /* Create array*/
-    gameArray = createArray(row_map, col_map);
-    
-    for (i = 0; i < row_map; i++) {
-        for (a = 0; a < col_map; a++) {
-            printf("%c", gameArray[i][a]);
-        }
-    }
-    free(gameArray);
+    map = createMap(row_map, col_map);
+
+    printf("after map creation");
+
+    /* Place the food on the map*/
+    placeFood(row_map, col_map, map);
+
+    free(map);
+
     return 0;   
 }
