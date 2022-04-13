@@ -48,8 +48,9 @@ int main(int args, char **argv) {
     
     for (i = 0; i < row_map; i++) {
         for (a = 0; a < col_map; a++) {
-            printf(gameArray[i][a]);
+            printf("%c", gameArray[i][a]);
         }
     }
+    free(gameArray);
     return 0;   
 }
