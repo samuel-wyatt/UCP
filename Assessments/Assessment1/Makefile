@@ -6,7 +6,7 @@ CFLAGS = -Wall -Werror -ansi -pedantic
 $(EXEC) : $(OBJ)
 	$(CC) $(OBJ) -o $(EXEC)
 
-main.o : main.c array.h
+main.o : main.c array.h random.h terminal.h
 	$(CC) -c main.c $(CFLAGS)
 
 array.o : array.c array.h random.h
@@ -14,6 +14,9 @@ array.o : array.c array.h random.h
 
 random.o : random.h
 	$(CC) -c random.c $(CFLAGS)
+
+terminal.o : terminal.h
+	$(CC) -c terminal.c $(CFLAGS)
 
 clean :
 	rm -f $(EXEC) *.o

@@ -3,42 +3,40 @@
 #include "random.h"
 #include "array.h"
 
-void createArray(int row, int col, char **map) {
+void createBorder(int row, int col, char **map) {
     /* Initialise variables*/
-    int i;
+    int i, ii;
 
     /* Account for borders*/
     col += 2;
     row += 2;
 
     /* Add top border*/
-    for (i = 0; i < col - 1; i++) {
-        map[0][i] = '*';
+    for (i = 0; i < col; i++) {
+        map[0][i] = WALL;
     }
 
     /* Add border for all middle elements*/
     for (i = 1; i < row - 1; i++) {
-        map[i][0] = '*';
-        map[i][col - 1] = '*';
+        map[i][0] = WALL;
+
+        for (ii = 1; ii < col; ii++) {
+            map[i][ii] = ' ';
+        }
+        map[i][col - 1] = WALL;
     }
 
     /* Add bottom border*/
-    for (i = 0; i < col - 1; i++) {
-        map[row - 1][i] = '*';
+    for (i = 0; i < col; i++) {
+        map[row - 1][i] = WALL;
     }
 }
 
 void placeFood(int nRow, int nCol, char** map) {
     /* Initialise variables*/
-    int row, col;
+    int row = nRow - 2; 
+    int col = nCol - 2;
     
-    /* Call initRandom*/
-    initRandom();
-
-    /*Assign random numbers to row and col, which will land on the playing area*/
-    row = random(0, nRow);
-    col = random(0, nCol);
-
     /*Replace that coordinate with @*/
-    map[row][col] = FOOD;
+    map[random(1, row)][random(1, col)] = FOOD;
 }

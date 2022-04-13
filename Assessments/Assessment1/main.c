@@ -1,30 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "random.h"
+#include "terminal.h"
 #include "array.h"
 
 int main(int args, char **argv) {
     /* Initiailise variables*/
-    int row_map = atoi(argv[1]);
-    int col_map = atoi(argv[2]);
-    int snake_length = atoi(argv[3]);  
-    int proceed, i;
-    char **map;
-
-    int a, b;
-
-    /* Dynamically allocated array of char pointer pointers named map*/
-    map = malloc((atoi(argv[1]) + 2) * sizeof(char*));
-    
-    /* Allocate a char pointer arra1y for each element of map*/
-    for (i = 0; i < atoi(argv[1]) - 1; i++) {
-        map[i] = malloc((atoi(argv[2]) + 2) * sizeof(char));
-    }
+    int row_map, col_map, snake_length, proceed, i, a, b;
+    char **map = NULL;
 
     /* Check for correct usage*/
     if (args < 4) {
         printf("USAGE: ./snake <row_map> <col_map> <snake_length>\n");
         return 1;
     }
+
+    /* Call initRandom*/
+    initRandom();
+
 
     /* Assign command line input to variables*/
     row_map = atoi(argv[1]);
@@ -55,15 +48,32 @@ int main(int args, char **argv) {
         return 1;
     }
 
-    /* Create array*/
-    createArray(row_map, col_map, map);
-    
-    for (a = 0; a < row_map + 2; a++) {
-        for (b = 0; b < col_map; b++) {
-            printf("%c", map[a][b]);
-        }
+    /*Initialise 2d array*/
+    map = malloc((row_map + 2) * sizeof(char *));
+    for (i = 0; i < row_map + 2; i++) {
+        map[i] = malloc((col_map + 2) * sizeof(char));
+    }
+    /* Check if memory allocation failed*/
+    if (map == NULL) {
+        printf("ERROR: Memory allocation failed");
+        return 1;   
     }
 
+    /* Create array*/
+    createBorder(row_map, col_map, map);
+
+    /* Place the food on the map*/
+    placeFood(row_map, col_map, map);
+
+    /*Print the array TESTING*/
+    for (a = 0; a < row_map + 2; a++) {
+        for (b = 0; b < col_map + 2; b++) {
+            printf("%c", map[a][b]);
+        }
+        printf("\n");
+    }
+    
+    /* Free entire 2s array*/
     for (i = 0; i < row_map + 2; i++) {
         free(map[i]);
     }
