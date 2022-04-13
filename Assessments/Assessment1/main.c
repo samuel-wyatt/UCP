@@ -5,7 +5,8 @@
 
 int main(int args, char **argv) {
     /* Initiailise variables*/
-    int row_map, col_map, snake_length, proceed;
+    int row_map, col_map, snake_length, proceed, i;
+    char **map = NULL;
 
     /* Check for correct usage*/
     if (args < 4) {
@@ -42,17 +43,40 @@ int main(int args, char **argv) {
         return 1;
     }
 
-    /*TEST*/
-    printf("before map creation.");
+    /*Initialise 2d array*/
+    map = malloc((row_map + 2) * sizeof(char *));
+    for (i = 0; i < row_map + 2; i++) {
+        map[i] = malloc((col_map + 2) * sizeof(char));
+    }
+       /* Check if memory allocation failed*/
+    if (map == NULL) {
+        printf("ERROR: Memory allocation failed");
+        return 1;
+    }
+
 
     /* Create array*/
-    map = createMap(row_map, col_map);
-
-    printf("after map creation");
+    createBorder(row_map, col_map, map);
 
     /* Place the food on the map*/
     placeFood(row_map, col_map, map);
 
+
+
+
+
+
+
+
+
+
+
+
+
+    /*Free the entire 2d array*/
+    for(i = 0; i < row_map + 2; i++) {
+        free(map[i]);
+    }
     free(map);
 
     return 0;   

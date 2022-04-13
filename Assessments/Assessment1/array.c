@@ -3,24 +3,11 @@
 #include "array.h"
 #include "random.h"
 
-char** createMap(int row_map, int col_map) {
+void createBorder(int row, int col, char **map) {
     /* Initialise variables*/
     int i;
-    int col = col_map + 2;
-    int row = row_map + 2;
-
-    /* Dynamically allocated array of char pointer pointers named map*/
-    char **map = (char**)malloc(row * sizeof(char *));
-    
-    /* Allocate a char pointer array for each element of map*/
-    for (i = 0; i < row_map; i++) {
-        map[i] = (char*)malloc(col * sizeof(char));
-    }
-
-    /* Check if memory allocation failed*/
-    if (map == NULL) {
-        printf("ERROR: Memory allocation failed");
-    }
+    col += 2;
+    row += 2;
 
     /* Add top border*/
     for (i = 0; i < col - 1; i++) {
@@ -37,7 +24,6 @@ char** createMap(int row_map, int col_map) {
     for (i = 0; i < col - 1; i++) {
         map[row - 1][i] = WALL;
     }
-    return map;
 }
 
 void placeFood(int nRow, int nCol, char** map) {
