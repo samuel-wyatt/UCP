@@ -63,7 +63,7 @@ void createSnake(int snakeLength, char **map, int **snake) {
         snake[i][1] = number;
         number++;
     }
-    /* 
+    /* ASCII Values for the characters
     # = 35
     < = 60
     > = 62
