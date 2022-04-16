@@ -1,14 +1,30 @@
-#include <stdio.h>
-#include <stdlib.h>
+/*********************************************************************
+ * Author: Samuel Wyatt                                              *
+ * Date: 00/00/0000                                                  *
+ * File Name: array.c                                                *
+ * Purpose: To intialise the map and snake array, and place the food *
+ * *******************************************************************/
 #include "random.h"
 #include "array.h"
 
+/*
+SUBMODULE : createGame
+IMPORT : row (int), col (int), snakeLength (int), map (char**), snake (int**)
+EXPORT : None
+PURPOSE : To run the subsequent methods for array initialisation and food placement.
+*/
 void createGame(int row, int col, int snakeLength, char **map, int **snake) {
     createBorder(row, col, map);
     placeFood(row, col, snakeLength, map);
     createSnake(snakeLength, map, snake);
 }
 
+/*
+SUBMODULE : createBorder
+IMPORT : row (int), col (int), map (char**)
+EXPORT : None
+PURPOSE : To fill the outside elements of the array to create the border.
+*/
 void createBorder(int row, int col, char **map) {
     /* Initialise variables*/
     int i, ii;
@@ -38,6 +54,12 @@ void createBorder(int row, int col, char **map) {
     }
 }
 
+/*
+SUBMODULE : placeFood
+IMPORT : row (int), col (int), snakeLength (int), map (char**)
+EXPORT : None
+PURPOSE : To utilise random.c to create two random integers, the row and col elements for the food.
+*/
 void placeFood(int row, int col, int snakeLength, char** map) {
     /* Initialise variables*/
     int randR, randC;
@@ -57,20 +79,13 @@ void createSnake(int snakeLength, char **map, int **snake) {
     int i;
     int number = 1;
 
-    /* Fills each element of snake with the coordinates for the snake on the map array initally, and the ASCII value for the starting characters*/
+    /* Fills each element of snake with the coordinates for the snake on the map array in its initial location*/
     for (i = snakeLength - 1; i > -1; i--) {
         snake[i][0] = 1;
         snake[i][1] = number;
         number++;
     }
-    /* ASCII Values for the characters
-    # = 35
-    < = 60
-    > = 62
-    ^ = 94
-    v = 118
-    | = 124
-    - = 45 */
+    /*Fills the elements of column 3, which contain an integer representation of the character type of that section of snake*/
     snake[0][2] = 62;
     for (i = 1; i < snakeLength - 1; i++) {
         snake[i][2] = 45;

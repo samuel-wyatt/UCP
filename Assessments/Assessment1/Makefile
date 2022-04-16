@@ -11,13 +11,13 @@ endif
 $(EXEC) : $(OBJ)
 	$(CC) $(OBJ) -o $(EXEC)
 
-main.o : main.c array.h random.h terminal.h array.h game.h
+main.o : main.c array.h random.h game.h
 	$(CC) -c main.c $(CFLAGS)
 
 array.o : array.c array.h random.h
 	$(CC) -c array.c $(CFLAGS)
 
-game.o : game.c terminal.h game.h array.h
+game.o : game.c terminal.h game.h
 	$(CC) -c game.c $(CFLAGS)
 
 random.o : random.h
