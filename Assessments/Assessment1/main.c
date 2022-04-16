@@ -3,12 +3,13 @@
 #include "random.h"
 #include "terminal.h"
 #include "array.h"
+#include "game.h"
 
 int main(int args, char **argv) {
     /* Initiailise variables*/
-    int row_map, col_map, snake_length, proceed, i;
+    int row_map, col_map, snake_length, proceed = 0, i;
     char **map = NULL;
-    char *snake = NULL;
+    int **snake = NULL;
 
     /* Check for correct usage*/
     if (args < 4) {
@@ -60,7 +61,10 @@ int main(int args, char **argv) {
     }
 
     /*Initialise the snake*/
-    snake = malloc(snake_length * sizeof(char));
+    snake = malloc(snake_length * sizeof(int*));
+    for (i = 0; i < snake_length; i++) {
+        snake[i] = malloc(3 * sizeof(int));
+    }
 
     /* Check if memory allocation failed*/
     if (snake == NULL) {
@@ -71,15 +75,23 @@ int main(int args, char **argv) {
     /* Create the map and place the food*/
     createGame(row_map, col_map, snake_length, map, snake);
 
-    for (i = 0; i < snake_length; i++) {
-        printf("%c", snake[i]);
-    }
+    /*Begin the game logic*/
+    logic(map, snake, row_map + 2, col_map + 2, snake_length);
     
-    /* Free entire 2d array*/
+    /* Free map array*/
     for (i = 0; i < row_map + 2; i++) {
         free(map[i]);
     }
     free(map);
+
+    /* Free snake array*/
+    for (i = 0; i < snake_length; i++) {
+        free(snake[i]);
+    }
+    free(snake);
+
+    map = NULL;
+    snake = NULL;
 
     return 0;   
 }

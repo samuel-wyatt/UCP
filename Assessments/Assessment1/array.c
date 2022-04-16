@@ -3,9 +3,10 @@
 #include "random.h"
 #include "array.h"
 
-void createGame(int row, int col, int snakeLength, char **map, char *snake) {
+void createGame(int row, int col, int snakeLength, char **map, int **snake) {
     createBorder(row, col, map);
     placeFood(row, col, snakeLength, map);
+    createSnake(snakeLength, map, snake);
 }
 
 void createBorder(int row, int col, char **map) {
@@ -52,13 +53,27 @@ void placeFood(int row, int col, int snakeLength, char** map) {
     map[randR][randC] = FOOD;
 }
 
-void createSnake(int snakeLength, char **map, char *snake) {
+void createSnake(int snakeLength, char **map, int **snake) {
     int i;
-    map[1][snakeLength] = snake;
-    snake[0] = '#';
-    snake[snakeLength - 1] = '>';
-    for (i = 1; i < snakeLength - 1; i++) {
-        snake[i] = '-';
-    }
-}
+    int number = 1;
 
+    /* Fills each element of snake with the coordinates for the snake on the map array initally, and the ASCII value for the starting characters*/
+    for (i = snakeLength - 1; i > -1; i--) {
+        snake[i][0] = 1;
+        snake[i][1] = number;
+        number++;
+    }
+    /* 
+    # = 35
+    < = 60
+    > = 62
+    ^ = 94
+    v = 76
+    | = 124
+    - = 45 */
+    snake[0][2] = 62;
+    for (i = 1; i < snakeLength - 1; i++) {
+        snake[i][2] = 45;
+    }
+    snake[snakeLength - 1][2] = 35;
+}
