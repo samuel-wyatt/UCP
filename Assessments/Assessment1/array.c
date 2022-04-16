@@ -26,7 +26,7 @@ void createBorder(int row, int col, char **map) {
     for (i = 1; i < row - 1; i++) {
         map[i][0] = WALL;
 
-        for (ii = 1; ii < col; ii++) {
+       for (ii = 1; ii < col; ii++) {
             map[i][ii] = ' ';
         }
         map[i][col - 1] = WALL;
@@ -68,7 +68,7 @@ void createSnake(int snakeLength, char **map, int **snake) {
     < = 60
     > = 62
     ^ = 94
-    v = 76
+    v = 118
     | = 124
     - = 45 */
     snake[0][2] = 62;

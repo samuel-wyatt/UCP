@@ -61,7 +61,7 @@ int main(int args, char **argv) {
     }
 
     /*Initialise the snake*/
-    snake = malloc(snake_length * sizeof(int*));
+    snake = malloc(snake_length * sizeof(int *));
     for (i = 0; i < snake_length; i++) {
         snake[i] = malloc(3 * sizeof(int));
     }
