@@ -42,28 +42,28 @@ void logic(char **map, int **snake, int row, int col, int snakeLength) {
         switch(direction) {
             case 'w':
                 if (snake[0][2] != 118) {
-                    gameOver = moveUp(map, snake, tailIdx);
+                    gameOver = move(map, snake, tailIdx, direction);
                 } else {
                     printf("Cannot move backwards\n");
                 }
             break;
             case 'a':
                 if (snake[0][2] != 62) {
-                    gameOver = moveLeft(map, snake, tailIdx);
+                    gameOver = move(map, snake, tailIdx, direction);
                 } else {
                     printf("Cannot move backwards\n");
                 }
             break;
             case 's':
                 if (snake[0][2] != 94) {
-                    gameOver = moveDown(map, snake, tailIdx);
+                    gameOver = move(map, snake, tailIdx, direction);
                 } else {
                     printf("Cannot move backwards\n");
                 }
             break;
             case 'd':
                 if (snake[0][2] != 60) {
-                    gameOver = moveRight(map, snake, tailIdx);
+                    gameOver = move(map, snake, tailIdx, direction);
                 } else {
                     printf("Cannot move backwards\n");
                 }
@@ -98,115 +98,31 @@ char input() {
     return direction;
 }
 
-
-
-int moveUp(char **map, int **snake, int tailIdx) {
-    /* Create variables*/
+int move(char **map, int **snake, int tailIdx, char direction) {
     char newSpace;
     int gameOver, i, oldTailRow, oldTailCol;
 
-    /* Initialise variables*/
-    newSpace = map[snake[0][0] - 1][snake[0][1]];
-    oldTailRow = snake[tailIdx][0];
-    oldTailCol = snake[tailIdx][1];
-
-    /* Do absolutely nothing if next space is a wall*/
-    if (newSpace == '*') {
-        gameOver = 0;
-    /* Main case*/
-    } else {
-        /* Shuffles the row and column values up one*/
-        for (i = tailIdx; i > 0; i--) {
-
-            snake[i][0] = snake[i - 1][0];
-            snake[i][1] = snake[i - 1][1];
-        }
-        /* Decrease the value of the row of the head (index of the map)*/
-        snake[0][0]--;
-        map[oldTailRow][oldTailCol] = ' ';
-        gameOver = 0;
-    
-        
-        /* Resets all characters to correct type*/
-        snake[0][2] = 124;
-        for (i = tailIdx - 1; i > 0; i--) {
-            snake[i][2] = snake[i - 1][2];
-        }
-        snake[0][2] = 94;
-        snake[tailIdx][2] = 35;
-        }
-
-        if (newSpace == '@') {
-            gameOver = 1;
-        }
-        #ifndef UNBEATABLE
-        if (newSpace == '-' || newSpace == '|' || newSpace == '#') {
-            gameOver = -1;
-        }
-        #endif
-    return gameOver;
-}
-
-int moveDown(char **map, int **snake, int tailIdx) {
-    /* Create variables*/
-    char newSpace;
-    int gameOver, i, oldTailRow, oldTailCol;
-
-    /* Initialise variables*/
-    newSpace = map[snake[0][0] + 1][snake[0][1]];
-    oldTailRow = snake[tailIdx][0];
-    oldTailCol = snake[tailIdx][1];
-
-    /* Base cases*/
-    if (newSpace == '*') {
-        gameOver = 0;
-    /* Main case*/
-    } else {
-        for (i = tailIdx; i > 0; i--) {
-
-            snake[i][0] = snake[i - 1][0];
-            snake[i][1] = snake[i - 1][1];
-        }
-        snake[0][0]++;
-        map[oldTailRow][oldTailCol] = ' ';
-        gameOver = 0;
-
-        
-        /* Resets all characters to correct type*/
-    
-        snake[0][2] = 124;
-        for (i = tailIdx - 1; i > 0; i--) {
-            snake[i][2] = snake[i - 1][2];
-        }
-        snake[0][2] = 118;
-        snake[tailIdx][2] = 35;
-
-        if (newSpace == '@') {
-            gameOver = 1;
-        }
-        #ifndef UNBEATABLE
-        if (newSpace == '-' || newSpace == '|' || newSpace == '#') {
-            gameOver = -1;
-        }
-        #endif
+    switch (direction) {
+        case 'w':
+            newSpace = map[snake[0][0] - 1][snake[0][1]];
+        break;
+        case 's':
+            newSpace = map[snake[0][0] + 1][snake[0][1]];
+        break;
+        case 'a':
+            newSpace = map[snake[0][0]][snake[0][1] - 1];
+        break;
+        case 'd':
+            newSpace = map[snake[0][0]][snake[0][1] + 1];
+        break;
     }
-    return gameOver;
-}
-
-int moveRight(char **map, int **snake, int tailIdx) {
-    /* Create variables*/
-    char newSpace;
-    int gameOver, i, oldTailRow, oldTailCol;
-
-    /* Initialise variables*/
-    newSpace = map[snake[0][0]][snake[0][1] + 1];
     oldTailRow = snake[tailIdx][0];
     oldTailCol = snake[tailIdx][1];
 
     /* Base cases*/
     if (newSpace == '*') {
         gameOver = 0;
-    
+
     /* Main case*/
     } else {
         for (i = tailIdx; i > 0; i--) {
@@ -214,64 +130,61 @@ int moveRight(char **map, int **snake, int tailIdx) {
             snake[i][0] = snake[i - 1][0];
             snake[i][1] = snake[i - 1][1];
         }
-        snake[0][1]++;
+        switch (direction) {
+            case 'w':
+            snake[0][0]--;
+            break;
+            case 's':
+            snake[0][0]++;
+            break;
+            case 'a':
+            snake[0][1]--;
+            break;
+            case 'd':
+            snake[0][1]++;
+            break;
+        }
+        
         map[oldTailRow][oldTailCol] = ' ';
         gameOver = 0;
-        
-        
+    
         /* Resets all characters to correct type*/
-        snake[0][2] = 45;
-        for (i = tailIdx - 1; i > 0; i--) {
-            snake[i][2] = snake[i - 1][2];
-        }
-        snake[0][2] = 62;
-        snake[tailIdx][2] = 35;
-
-        if (newSpace == '@') {
-            gameOver = 1;
-        }
-        #ifndef UNBEATABLE
-        if (newSpace == '-' || newSpace == '|' || newSpace == '#') {
-            gameOver = -1;
-        }
-        #endif
+        switch (direction) {
+        case 'w':
+            snake[0][2] = 124;
+            for (i = tailIdx - 1; i > 0; i--) {
+                snake[i][2] = snake[i - 1][2];
+            }
+            snake[0][2] = 94;
+            snake[tailIdx][2] = 35;
+        break;
+        case 's':
+            snake[0][2] = 124;
+            for (i = tailIdx - 1; i > 0; i--) {
+                snake[i][2] = snake[i - 1][2];
+            }
+            snake[0][2] = 118;
+            snake[tailIdx][2] = 35;
+        break;
+        case 'a':
+            snake[0][2] = 45;
+            for (i = tailIdx - 1; i > 0; i--) {
+                snake[i][2] = snake[i - 1][2];
+            }
+            snake[0][2] = 60;
+            snake[tailIdx][2] = 35;
+        break;
+        case 'd':
+            snake[0][2] = 45;
+            for (i = tailIdx - 1; i > 0; i--) {
+                snake[i][2] = snake[i - 1][2];
+            }   
+            snake[0][2] = 62;
+            snake[tailIdx][2] = 35;
+        break;
     }
-    return gameOver;
-}
 
-int moveLeft(char **map, int **snake, int tailIdx) {
-    /* Create variables*/
-    char newSpace;
-    int gameOver, i, oldTailRow, oldTailCol;
-
-    /* Initialise variables*/
-    newSpace = map[snake[0][0]][snake[0][1] - 1];
-    oldTailRow = snake[tailIdx][0];
-    oldTailCol = snake[tailIdx][1];
-
-    /* Base cases*/
-    if (newSpace == '*') {
-        gameOver = 0;
-    
-    /* Main case*/
-    } else {
-        for (i = tailIdx; i > 0; i--) {
-
-            snake[i][0] = snake[i - 1][0];
-            snake[i][1] = snake[i - 1][1];
-        }
-        snake[0][1]--;
-        map[oldTailRow][oldTailCol] = ' ';
-        gameOver = 0;
-    
-        /* Resets all characters to correct type*/
-        snake[0][2] = 45;
-        for (i = tailIdx - 1; i > 0; i--) {
-            snake[i][2] = snake[i - 1][2];
-        }
-        snake[0][2] = 60;
-        snake[tailIdx][2] = 35;
-
+        /* Case for if the space that was moved to was the food, or its own body*/
         if (newSpace == '@') {
             gameOver = 1;
         }
