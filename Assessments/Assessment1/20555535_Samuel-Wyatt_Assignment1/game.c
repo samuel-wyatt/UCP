@@ -1,6 +1,6 @@
 /******************************************************
  * Author: Samuel Wyatt                               *
- * Date: 00/00/0000                                   *
+ * Date: 16/04/2022                                   *
  * File Name: game.c                                  *
  * Purpose: To run the input and logic of the program *
  * ****************************************************/
@@ -9,16 +9,16 @@
 #include "terminal.h"
 #include "game.h"
 
-/*********
-* ASCII Values for the characters
-*   # = 35
-*   < = 60
-*   > = 62
-*   ^ = 94
-*   v = 118
-*   | = 124
-*   - = 45 
-***********/
+/**********************************
+* ASCII Values for the characters *
+*   # = 35                        *
+*   < = 60                        *
+*   > = 62                        *
+*   ^ = 94                        *
+*   v = 118                       *
+*   | = 124                       *
+*   - = 45                        *
+***********************************/
 
 /*
 SUBMODULE : logic
@@ -32,23 +32,18 @@ void logic(char **map, int **snake, int row, int col, int snakeLength) {
     int msgNum = 0;
     int *msg = &msgNum;
     int gameOver = 0;
-    int i, ii;
     int tailIdx = snakeLength - 1;
+    int i;
 
     /* Start loop for gameplay*/
     do {
         /* Replaces the areas on the map with the new snake*/
-        for (i = 0; i < snakeLength; i++) {
+        for (i = tailIdx; i > -1; i--) {
             map[snake[i][0]][snake[i][1]] = (char)snake[i][2];
         }
-        /* Prints every element of the map, clearing the terminal beforehand*/
-        system("clear");
-        for (i = 0; i < row; i++) {
-            for (ii = 0; ii < col; ii++) {
-                printf("%c", map[i][ii]);
-            }
-            printf("\n");
-        }
+        
+        /* Prints the map*/
+        printMap(map, row, col);
 
         /* Print the message from the previous movement*/
         if (*msg == 1) {
@@ -66,28 +61,28 @@ void logic(char **map, int **snake, int row, int col, int snakeLength) {
         switch(direction) {
             case 'w':
                 if (snake[0][2] != 118) {
-                    gameOver = move(map, snake, tailIdx, direction, msg);
+                    gameOver = move(map, snake, tailIdx, direction, msg, row, col);
                 } else {
                     *msg = 2;
                 }
             break;
             case 'a':
                 if (snake[0][2] != 62) {
-                    gameOver = move(map, snake, tailIdx, direction, msg);
+                    gameOver = move(map, snake, tailIdx, direction, msg, row, col);
                 } else {
                     *msg = 2;
                 }
             break;
             case 's':
                 if (snake[0][2] != 94) {
-                    gameOver = move(map, snake, tailIdx, direction, msg);
+                    gameOver = move(map, snake, tailIdx, direction, msg, row, col);
                 } else {
                     *msg = 2;
                 }
             break;
             case 'd':
                 if (snake[0][2] != 60) {
-                    gameOver = move(map, snake, tailIdx, direction, msg);
+                    gameOver = move(map, snake, tailIdx, direction, msg, row, col);
                 } else {
                     *msg = 2;
                 }
@@ -140,7 +135,7 @@ IMPORT : map (char**), snake (int**), tailIdx (int), direction (char), msg (int*
 EXPORT : gameOver (int)
 PURPOSE : To move the snake one element in the specified direction.
 */
-int move(char **map, int **snake, int tailIdx, char direction, int *msg) {
+int move(char **map, int **snake, int tailIdx, char direction, int *msg, int row, int col) {
     /* Initialises variables*/
     char newSpace;
     int gameOver, i, oldTailRow, oldTailCol;
@@ -197,61 +192,110 @@ int move(char **map, int **snake, int tailIdx, char direction, int *msg) {
         map[oldTailRow][oldTailCol] = ' ';
         gameOver = 0;
     
-        /* Resets all characters to correct type*/
-        switch (direction) {
-        case 'w':
-            /* Sets the first element of the array to '|' or '-', so that the subsequent elements can copy from it (useful if its the first turn)*/
-            snake[0][2] = 124;
-            /* Loops through the array, copying each character value to the previous one*/
-            for (i = tailIdx - 1; i > 0; i--) {
-                snake[i][2] = snake[i - 1][2];
-            }
-            /* Resets head to '^' */
-            snake[0][2] = 94;
-            /* Resets tail to '#' */
-            snake[tailIdx][2] = 35;
-        break;
-        case 's':
-            snake[0][2] = 124;
-            for (i = tailIdx - 1; i > 0; i--) {
-                snake[i][2] = snake[i - 1][2];
-            }
-            /* Resets head to 'v' */
-            snake[0][2] = 118;
-            snake[tailIdx][2] = 35;
-        break;
-        case 'a':
-            snake[0][2] = 45;
-            for (i = tailIdx - 1; i > 0; i--) {
-                snake[i][2] = snake[i - 1][2];
-            }
-            /* Resets head to '<' */
-            snake[0][2] = 60;
-            snake[tailIdx][2] = 35;
-        break;
-        case 'd':
-            snake[0][2] = 45;
-            for (i = tailIdx - 1; i > 0; i--) {
-                snake[i][2] = snake[i - 1][2];
-            }   
-            /* Resets head to '>' */
-            snake[0][2] = 62;
-            snake[tailIdx][2] = 35;
-        break;
-    }
+        /* Resets all characters to correct character type*/
+        resetChar(snake, direction, tailIdx);
 
-        /* Check if the space that was moved to was the food, or its own body*/
+        /* Check if the space that was moved to was the food*/
         if (newSpace == '@') {
+
+            /* Replaces the areas on the map with the new snake*/
+            for (i = tailIdx; i > -1; i--) {
+                map[snake[i][0]][snake[i][1]] = (char)snake[i][2];
+            }
+
+            /* Reprints the map*/
+            printMap(map, row, col);
+
             /* gameOver = 1 means that the player has won*/
             gameOver = 1;
         }
+
         /* If UNBEATABLE is compiled, then the ability to lose due to touching the snake is removed*/
         #ifndef UNBEATABLE
+        /* Checks if the space that was moved to was the snakes body*/
         if (newSpace == '-' || newSpace == '|' || newSpace == '#') {
+
+            /* Replaces the areas on the map with the new snake*/
+            for (i = tailIdx; i > -1; i--) {
+                map[snake[i][0]][snake[i][1]] = (char)snake[i][2];
+            }
+
+            /* Reprints the map*/
+            printMap(map, row, col);
+
             /* gameOver = -1 means that the player has lost*/
             gameOver = -1;
         }
         #endif
     }
     return gameOver;
+}
+
+/*
+SUBMODULE : printMap
+IMPORT : map (char**), row (int), col (int)
+EXPORT : None
+PURPOSE : To print every element of the map.
+*/
+void printMap(char **map, int row, int col) {
+    int i, ii;
+    /* Clears the terminal before printing*/
+    system("clear");
+        for (i = 0; i < row; i++) {
+            for (ii = 0; ii < col; ii++) {
+                printf("%c", map[i][ii]);
+            }
+            printf("\n");
+        }
+}
+
+/*
+SUBMODULE : resetChar
+IMPORT : snake (int**), direction (char)
+EXPORT : None
+PURPOSE : To reset the characters within the snake to the correct integer.
+*/
+void resetChar(int **snake, char direction, int tailIdx) {
+    int i;
+    switch (direction) {
+            case 'w':
+                /* Sets the first element of the array to '|' or '-', so that the subsequent elements can copy from it (useful if its the first turn)*/
+                snake[0][2] = 124;
+                /* Loops through the array, copying each character value to the previous one*/
+                for (i = tailIdx - 1; i > 0; i--) {
+                    snake[i][2] = snake[i - 1][2];
+                }
+                /* Resets head to '^' */
+                snake[0][2] = 94;
+                /* Resets tail to '#' */
+                snake[tailIdx][2] = 35;
+            break;
+            case 's':
+                snake[0][2] = 124;
+                for (i = tailIdx - 1; i > 0; i--) {
+                    snake[i][2] = snake[i - 1][2];
+                }
+                /* Resets head to 'v' */
+                snake[0][2] = 118;
+                snake[tailIdx][2] = 35;
+            break;
+            case 'a':
+                snake[0][2] = 45;
+                for (i = tailIdx - 1; i > 0; i--) {
+                    snake[i][2] = snake[i - 1][2];
+                }
+                /* Resets head to '<' */
+                snake[0][2] = 60;
+                snake[tailIdx][2] = 35;
+            break;
+            case 'd':
+                snake[0][2] = 45;
+                for (i = tailIdx - 1; i > 0; i--) {
+                    snake[i][2] = snake[i - 1][2];
+                }   
+                /* Resets head to '>' */
+                snake[0][2] = 62;
+                snake[tailIdx][2] = 35;
+            break;
+    }
 }

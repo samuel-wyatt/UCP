@@ -1,6 +1,6 @@
 /*********************************************************************
  * Author: Samuel Wyatt                                              *
- * Date: 00/00/0000                                                  *
+ * Date: 16/04/2022                                                  *
  * File Name: main.c                                                 * 
  * Purpose: To recieve command line arguments, create map and snake, *
  *          call the appropriate functions and free memory           *

@@ -1,6 +1,6 @@
 /*********************************************************************
  * Author: Samuel Wyatt                                              *
- * Date: 00/00/0000                                                  *
+ * Date: 16/04/2022                                                  *
  * File Name: array.c                                                *
  * Purpose: To intialise the map and snake array, and place the food *
  * *******************************************************************/

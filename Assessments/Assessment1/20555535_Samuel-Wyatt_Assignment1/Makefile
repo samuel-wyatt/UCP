@@ -1,7 +1,7 @@
 CC = gcc
 EXEC = snake
 OBJ = main.o array.o random.o game.o terminal.o
-CFLAGS = -Wall -Werror -ansi -pedantic -g
+CFLAGS = -Wall -Werror -ansi -pedantic
 
 ifdef UNBEATABLE
 CFLAGS += -D UNBEATABLE=1
