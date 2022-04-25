@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Werror -ansi -pedantic
-EXEC = dispaly
+EXEC = display
 OBJ = display.o plot.o
 
 $(EXEC) : $(OBJ)
