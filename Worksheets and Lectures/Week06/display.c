@@ -41,4 +41,5 @@ int main(int args, char **argv) {
     free(array);
     array = NULL;
     }
+    return 0;
 }
