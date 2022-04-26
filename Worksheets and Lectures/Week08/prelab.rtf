@@ -1,0 +1,135 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2638
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28020\viewh14240\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Pre-Lab Exercises:\
+\
+1a) \
+typedef struct \{\
+	int day;\
+	int month;\
+	int year;\
+\} date;\
+\
+1b) \
+typedef struct \{\
+	int x;\
+	int y;\
+	int z;\
+\} coordinates;\
+\
+1c)\
+typedef struct \{\
+	int number;\
+	char *street;\
+	char *city;\
+	int postcode;\
+	char *state;\
+	char *country;\
+\} address;\
+\
+1d)\
+typedef struct \{\
+	char *room;\
+	struct \{\
+		int hour;\
+		int min;\
+	\} time;\
+	char *day;\
+\} practical;\
+\
+1e)\
+typedef struct \{\
+	struct \{\
+		char *room;\
+		char *day;\
+		struct \{\
+			int hour;\
+			int min;\
+		\} time;\
+	\} practical\
+	struct \{\
+		int day;\
+		int month;\
+		int year;\
+	\} date;\
+\} practicals;\
+\
+2a)\
+date *date = (date*)malloc(sizeof(date));\
+free(date);\
+\
+2b)\
+coordinates *coordArray = (coordinates*)malloc(25 * sizeof(coordinates));\
+free(coordArray);\
+\
+2c)\
+Info *info = (info*)malloc(sizeof(Info));\
+free(info);\
+\
+2d)\
+Info *infoArray = (Info*)malloc(25 * sizeof(Info));\
+free(infoArray);\
+\
+2e)\
+InfoList *list = (InfoList*)malloc(sizeof(InfoList));\
+list->length = 25;\
+free(list);\
+\
+3. a) \
+var = instance of a struct\
+Accessing datatype b inside struct\
+\
+b)\
+var = pointer to struct\
+Accessing datatype b inside struct\
+\
+c)\
+var = array of structs\
+Accessing datatype b inside struct [I] of the array\
+\
+d)\
+var = an array of pointers to structs\
+Accessing datatype b of struct [I] of the array\
+\
+e)\
+var = instance of struct\
+Accessing element i of the array b inside struct\
+\
+f)\
+var = array of pointers to structs\
+Accessing element j of the array inside struct i of the struct pointer array\
+\
+g)\
+\
+\
+h)\
+var = instance of a struct, containing another struct\
+Accessing the datatype c, within struct b, within var\
+\
+i)\
+var = instance of a struct, containing datatype b, which is a 2d array containing structs\
+Accessing datatype c, which is at element [I][j] of datatype b, inside var\
+\
+4.\
+typedef struct LinkedListNode \{\
+	FruitBat *str;\
+	struct LinkedListNode *next;\
+\} LinkedListNode;\
+\
+typedef struct \{\
+	LinkedListNode *head;\
+	LinkedListNode *tail;\
+	int size;\
+\} LinkedList;\
+\
+5.\
+a) If you point the head to the new node first, then you lose the location of the node head was pointing to before. It means that you lose the rest of the linked list. It is important to get the information out of head before reassigning it.\
+b) Yes, there is nothing from stopping you from pointing a different linked list to an element, and having a second next which points to the next element in the new linked list.\
+c) Yes, only if each node had two next elements, otherwise it would create a loop which would repeat elements.\
+\
+\
+}
