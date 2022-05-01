@@ -14,6 +14,7 @@ int main(int argc, char **argv) {
 
     if (argc < 4) {
         printf("Usage : ./generate <filename> <rows> <columns>\n");
+        
     } else {
         if (strcmp(fileName, "-") != 0) {
             if ((fPtr = fopen(fileName, "w")) == NULL) {
