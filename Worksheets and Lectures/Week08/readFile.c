@@ -5,36 +5,47 @@
 int main(int argc, char **argv) {
     FILE *fPtr;
     journal *journalArray;
-    char *message = NULL;
+    char *message = malloc(100 * sizeof(char));
     int size, day, month, year, index, i;
 
     if (argc < 2) {
         printf("USAGE: ./readFile <journalIndex>\n");
     } else {
         if ((fPtr = fopen("journal.txt", "r")) == NULL) {
-            printf("Failed to open file/n");
+            perror("Failed to open file/n");
         } else {
-            fscanf(fPtr, "%d", &size);
+            fscanf(fPtr, "%d\n", &size);
             journalArray = (journal*)malloc(size * sizeof(journal));
             
-            for (i = 0; i < size; i++) {
-                fscanf(fPtr, "%d/%d/%d", &day, &month, &year);
-                fgets(message, 100, fPtr);
-                journalArray[i].date.day = day;
-                journalArray[i].date.month = month;
-                journalArray[i].date.year = year;
-                journalArray[i].message = message;
-            }
-
             index = atoi(argv[1]);
+            if (index >= size) {
+                printf("Invalid index\n");
+            } else {
+                for (i = 0; i < size; i++) {
+                    fscanf(fPtr, "%d/%d/%d\n", &day, &month, &year);
+                    journalArray[i].date.day = day;
+                    journalArray[i].date.month = month;
+                    journalArray[i].date.year = year;
+                    journalArray[i].message = malloc(100 * sizeof(char));
+                    journalArray[i].message = fgets(message, 100, fPtr);
+                }
 
-            year = journalArray[index].date.year;
-            month = journalArray[index].date.month;
-            day = journalArray[index].date.day;
-            message = journalArray[index].message;
+                index = atoi(argv[1]);
 
-            printf("%d-%d-%d: %s", year, month, day, message);
+                year = journalArray[index].date.year;
+                month = journalArray[index].date.month;
+                day = journalArray[index].date.day;
+                message = journalArray[index].message;
+
+                printf("%d-%d-%d: %s\n", year, month, day, message);
+            }
             free(journalArray);
+            fclose(fPtr);
         }
     }
+    free(message);
+    fPtr = NULL;
+    message = NULL;
+    journalArray = NULL;
+    return 0;
 }
