@@ -34,6 +34,7 @@ int main(int argc, char **argv) {
             message = journalArray[index].message;
 
             printf("%d-%d-%d: %s", year, month, day, message);
+            free(journalArray);
         }
     }
 }
