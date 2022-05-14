@@ -7,7 +7,7 @@ typedef struct ListNode {
     struct ListNode *prev;
 } ListNode;
 
-typedef struct {
+typedef struct LinkedList {
     ListNode *head;
     ListNode *tail;
     int counter;
