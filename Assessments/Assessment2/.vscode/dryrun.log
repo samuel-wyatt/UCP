@@ -1,0 +1,10 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/samuelwyatt/Documents/_UNIX and C Programming/Assessments/Assessment2'
+gcc -c main.c -Wall -Werror -ansi -pedantic
+gcc -c array.c -Wall -Werror -ansi -pedantic
+gcc -c random.c -Wall -Werror -ansi -pedantic
+gcc -c game.c -Wall -Werror -ansi -pedantic
+gcc -c terminal.c -Wall -Werror -ansi -pedantic
+gcc main.o array.o random.o game.o terminal.o -o snake
+make: Leaving directory `/Users/samuelwyatt/Documents/_UNIX and C Programming/Assessments/Assessment2'
+ 
