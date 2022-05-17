@@ -1,17 +1,13 @@
 CC = gcc
 EXEC = snake
-OBJ = main.o array.o random.o game.o terminal.o
-CFLAGS = -Wall -Werror -ansi -pedantic
+OBJ = main.o array.o random.o game.o terminal.o LinkedList.o
+CFLAGS = -Wall -Werror -ansi -pedantic -g
 
-ifdef UNBEATABLE
-CFLAGS += -D UNBEATABLE=1
-UNBEATABLE : clean $(EXEC)
-endif
 
 $(EXEC) : $(OBJ)
 	$(CC) $(OBJ) -o $(EXEC)
 
-main.o : main.c array.h random.h game.h
+main.o : main.c array.h random.h game.h main.h LinkedList.h
 	$(CC) -c main.c $(CFLAGS)
 
 array.o : array.c array.h random.h
@@ -25,6 +21,9 @@ random.o : random.h
 
 terminal.o : terminal.h
 	$(CC) -c terminal.c $(CFLAGS)
+
+LinkedList.o : LinkedList.c LinkedList.h
+	$(CC) -c LinkedList.c $(CFLAGS)
 
 clean :
 	rm -f $(EXEC) *.o
