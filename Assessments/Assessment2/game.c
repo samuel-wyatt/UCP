@@ -10,17 +10,9 @@
 #include "game.h"
 #include "LinkedList.h"
 #include "main.h"
+#include "array.h"
 
-/**********************************
-* ASCII Values for the characters *
-*   # = 35                        *
-*   < = 60                        *
-*   > = 62                        *
-*   ^ = 94                        *
-*   v = 118                       *
-*   | = 124                       *
-*   - = 45                        *
-***********************************/
+#include "random.h"
 
 /*
 SUBMODULE : logic
@@ -31,8 +23,8 @@ PURPOSE : Controls the movement of the snake.
 void logic(char **map, LinkedList *snake, int row, int col, int foodNum) {
     /*Initialise variables*/
     char direction, headChar;
-    int msgNum = 0, foodCounter = 0;
-    int *msg = &msgNum;
+    int msgNum = 0, foodCounter = 0, tmpFood;
+    int *msg = &msgNum, *foodCountPtr = &foodCounter;
     ListNode *currentNode;
     snakeBody *bodyElement;
 
@@ -51,6 +43,8 @@ void logic(char **map, LinkedList *snake, int row, int col, int foodNum) {
 
         /* Print the food counter*/
         printf("Food Collected: %d/%d", foodCounter, foodNum);
+        tmpFood = foodCounter;
+
 
         /* Print the message from the previous movement*/
         if (*msg == 1) {
@@ -73,45 +67,53 @@ void logic(char **map, LinkedList *snake, int row, int col, int foodNum) {
         switch(direction) {
             case 'w':
                 if ((int)headChar != 118) {
-                    foodCounter = move(map, snake, direction, msg, row, col);
+                    move(map, snake, direction, msg, foodCountPtr);
                 } else {
                     *msg = 2;
                 }
             break;
             case 'a':
                 if ((int)headChar != 62) {
-                    foodCounter = move(map, snake, direction, msg, row, col);
+                    move(map, snake, direction, msg, foodCountPtr);
                 } else {
                     *msg = 2;
                 }
             break;
             case 's':
                 if ((int)headChar != 94) {
-                    foodCounter = move(map, snake, direction, msg, row, col);
+                    move(map, snake, direction, msg, foodCountPtr);
                 } else {
                     *msg = 2;
                 }
             break;
             case 'd':
                 if ((int)headChar != 60) {
-                    foodCounter = move(map, snake, direction, msg, row, col);
+                    move(map, snake, direction, msg, foodCountPtr);
                 } else {
                     *msg = 2;
                 }
             break;
         }
+        if (*foodCountPtr > tmpFood && *foodCountPtr != foodNum) {
+            placeFood(row - 2, col - 2, map, snake);
+        }
 
     } while (foodCounter != foodNum);
+    
+    currentNode = snake->head;
+    while (currentNode != NULL) {
+        bodyElement = (snakeBody*)currentNode->value;
+        map[bodyElement->row][bodyElement->col] = bodyElement->body;
+        currentNode = currentNode->next;
+    } 
+    printMap(map, row, col);
 
- 
     msg = NULL;
     /* Print a final food counter*/
-    printf("Food Collected: %d/%d", foodCounter, foodNum);
-
+    printf("Food Collected: %d/%d\n", foodCounter, foodNum);
 
     /*Win message*/
     printf("You Win!\n");
-    
 }
 
 /*
@@ -147,13 +149,13 @@ IMPORT : map (char**), snake (LinkedList*), direction (char), msg (int*)
 EXPORT : foodCounter (int)
 PURPOSE : To move the snake one element in the specified direction.
 */
-int move(char **map, LinkedList *snake, char direction, int *msg, int row, int col) {
+void move(char **map, LinkedList *snake, char direction, int *msg, int* foodCountPtr) {
     /* Initialises variables*/
     char newSpace;
-    int oldTailRow, oldTailCol, nextHeadRow, nextHeadCol, foodCounter = 0;
+    int oldTailRow, oldTailCol, headRow, headCol;
     ListNode *headNode, *tailNode, *currentNode, *prevNode;
     snakeBody *headBody, *tailBody, *currentBody, *prevBody;
-    snakeBody *newTail;
+    snakeBody *newTail = NULL;
 
     headNode = snake->head;
     headBody = (snakeBody*)headNode->value;
@@ -161,22 +163,22 @@ int move(char **map, LinkedList *snake, char direction, int *msg, int row, int c
     tailNode = snake->tail;
     tailBody = (snakeBody*)tailNode->value;
     
-    nextHeadRow = headBody->row;
-    nextHeadCol = headBody->col;
+    headRow = headBody->row;
+    headCol = headBody->col;
 
     /* Switch case for deciding where the next array element will be*/
     switch (direction) {
         case 'w':
-            newSpace = map[nextHeadRow - 1][nextHeadCol];
+            newSpace = map[headRow - 1][headCol];
         break;
         case 's':
-            newSpace = map[nextHeadRow + 1][nextHeadCol];
+            newSpace = map[headRow + 1][headCol];
         break;
         case 'a':
-            newSpace = map[nextHeadRow][nextHeadCol - 1];
+            newSpace = map[headRow][headCol - 1];
         break;
         case 'd':
-            newSpace = map[nextHeadRow][nextHeadCol + 1];
+            newSpace = map[headRow][headCol + 1];
         break;
     }
 
@@ -188,7 +190,6 @@ int move(char **map, LinkedList *snake, char direction, int *msg, int row, int c
     /* Base cases*/
     if (newSpace == '*') {
         *msg = 1;
-        /* gameOver = 0 means that the game is still running*/
 
     /* Main case*/
     } else {
@@ -202,8 +203,8 @@ int move(char **map, LinkedList *snake, char direction, int *msg, int row, int c
                 prevNode = currentNode->prev;
                 prevBody = (snakeBody*)prevNode->value;
 
-                prevBody->row = currentBody->row;
-                prevBody->col = currentBody->col;
+                currentBody->row = prevBody->row;
+                currentBody->col = prevBody->col;
 
                 currentNode = currentNode->prev;
             } else {
@@ -227,10 +228,6 @@ int move(char **map, LinkedList *snake, char direction, int *msg, int row, int c
         }
         
         map[oldTailRow][oldTailCol] = ' ';
-        
-    
-        /* Resets all characters to correct character type*/
-        resetChar(snake, direction);
 
         /* Check if the space that was moved to was the food*/
         if (newSpace == '@') {
@@ -240,11 +237,12 @@ int move(char **map, LinkedList *snake, char direction, int *msg, int row, int c
             newTail->col = oldTailCol;
             newTail->body = '#';
             insertLast(snake, newTail);
-            foodCounter++;
-            
+            *foodCountPtr += 1;
         }
+
+        /* Resets all characters to correct character type*/
+        resetChar(snake, direction);
     }
-    return foodCounter;
 }
 
 /*

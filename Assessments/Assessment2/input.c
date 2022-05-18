@@ -9,7 +9,8 @@ LinkedList* readFile(char *fileName, int *row_map, int *col_map) {
     int row, col;
     char body;
 
-    snakeBody *snakeBody;
+    /* Initialise the struct which will hold each snake body*/
+    snakeBody *bodyElement;
 
     /* Initialise the linked list*/
     LinkedList *snake;
@@ -33,14 +34,14 @@ LinkedList* readFile(char *fileName, int *row_map, int *col_map) {
             /* Until EOF is reached, read each value of the line*/
             while (fscanf(fPtr, "%d %d %c", &row, &col, &body) != EOF) {
 
-                /* Malloc the structS*/
-                snakeBody = malloc(sizeof(*snakeBody));
+                /* Malloc the struct*/
+                bodyElement = malloc(sizeof(snakeBody*));
                 /* Insert the values into the struct*/
-                snakeBody->row = row + 1;
-                snakeBody->col = col + 1;
-                snakeBody->body = body;
+                bodyElement->row = row + 1;
+                bodyElement->col = col + 1;
+                bodyElement->body = body;
                 /* Insert the struct into the linked list*/
-                insertStart(snake, (void*)snakeBody);
+                insertStart(snake, bodyElement);
             }
         } else {
             /* Row and column couldn't be found, so throw error*/

@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed May 18 16:02:42 2022
+# Make data base, printed on Wed May 18 23:07:27 2022
 
 # Variables
 
@@ -223,6 +223,7 @@ MFLAGS = -pqrR
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
+ 
 GDK_BACKEND = x11
 # automatic
 +F = $(notdir $+)
@@ -275,11 +276,10 @@ VSCODE_PID = 20940
 
 # Directories
 
-# . (device 2069, inode 8912914): 24 files, no impossibilities.
+# . (device 2069, inode 8912914): 29 files, no impossibilities.
 
-# 24 files, no impossibilities in 1 directories.
+# 29 files, no impossibilities in 1 directories.
 
- 
 # Implicit Rules
 
 # No implicit rules.
@@ -345,7 +345,7 @@ game.h:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-18 16:02:18.563179994
+#  Last modified 2022-05-18 23:07:26.902827415
 #  File has been updated.
 #  Successfully updated.
 
@@ -387,7 +387,7 @@ LinkedList.o: LinkedList.c LinkedList.h
 #  recipe to execute (from 'Makefile', line 26):
 	$(CC) -c LinkedList.c $(CFLAGS)
 
-array.o: array.c array.h random.h
+array.o: array.c array.h random.h LinkedList.h main.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -407,8 +407,9 @@ clean:
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 32):
 	rm -f $(EXEC) *.o
+ 
 
-game.o: game.c terminal.h game.h
+game.o: game.c terminal.h game.h LinkedList.h main.h array.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -442,7 +443,7 @@ LinkedList.c:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=25/1024=2%, Rehash=0, Collisions=2/69=3%
+# Load=25/1024=2%, Rehash=0, Collisions=2/74=3%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
@@ -452,9 +453,9 @@ LinkedList.c:
 # strcache buffers: 1 (0) / strings = 35 / storage = 371 B / avg = 10 B
 # current buf: size = 8162 B / used = 371 B / count = 35 / avg = 10 B
 
-# strcache performance: lookups = 78 / hit rate = 55%
+# strcache performance: lookups = 88 / hit rate = 60%
 # hash-table stats:
-# Load=35/8192=0%, Rehash=0, Collisions=1/78=1%
-# Finished Make data base on Wed May 18 16:02:42 2022
+# Load=35/8192=0%, Rehash=0, Collisions=1/88=1%
+# Finished Make data base on Wed May 18 23:07:27 2022
 
  

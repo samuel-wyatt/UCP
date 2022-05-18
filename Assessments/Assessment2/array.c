@@ -83,27 +83,25 @@ void placeFood(int row, int col, char** map, LinkedList *snake) {
     int randR, randC; 
     
     /* Exit variable for do-while loop. 0 = don't exit, 1 = exit*/
-    int exit = 1;
+    int exit = 0;
 
     /* Temporary list node and snake body to hold data*/
-    ListNode *currentNode;
-    snakeBody *bodyNode;
+    ListNode *currentNode = NULL;
+    snakeBody *bodyNode = NULL;
 
-    /* Generates coordinates for food placement, ensuring it is not placed on a border, or the snake*/
+    /*  Extracts the current node from the snake, starting at the head*/
+    currentNode = snake->head;
+    /* Loop until end of snake is reached*/
     do {
         randR = random(1, row);
         randC = random(1, col);
 
-        /*  Extracts the current node from the snake, starting at the head*/
-        currentNode = snake->head;
-        /* Loop until end of snake is reached*/
-        while (currentNode != NULL || exit == 0) {
-
+        while (currentNode != NULL) {
             /* Create a temporary struct to manipulate the data in the value of the current node*/
-            bodyNode = currentNode->value;
+            bodyNode = (snakeBody*)currentNode->value;
 
             /* Check if the randomly generated row and column clash with snake coordinates*/
-            if (randR == bodyNode->row || randC == bodyNode->col) {
+            if (randR == bodyNode->row && randC == bodyNode->col) {
                 /* If yes, do not exit the do-while, and the row and col will be re-calulated*/
                 exit = 0;
             } else {
@@ -113,7 +111,10 @@ void placeFood(int row, int col, char** map, LinkedList *snake) {
             currentNode = currentNode->next;
         }
     } while (exit == 0);
-
     /*Replace that coordinate with @*/
     map[randR][randC] = FOOD;
+}
+
+void freeList(void *data) {
+    free(data);
 }
