@@ -9,6 +9,8 @@ LinkedList* readFile(char *fileName, int *row_map, int *col_map) {
     int row, col;
     char body;
 
+    snakeBody *snakeBody;
+
     /* Initialise the linked list*/
     LinkedList *snake;
 
@@ -19,34 +21,36 @@ LinkedList* readFile(char *fileName, int *row_map, int *col_map) {
     if (fPtr == NULL) {
         /* Print error message if file could not be opened*/
         printf("ERROR: File \"%s\" could not be opened\n", fileName);
+        snake = NULL;
     } else {
         /* File has been successfully opened*/
 
         /* Create the linked list, which mallocs the memory*/
-        list = createLinkedList();
+        snake = createLinkedList();
 
         /* Read the first line of the file, the row and column for the map*/
         if (fscanf(fPtr, "%d %d", row_map, col_map) == 2) {
             /* Until EOF is reached, read each value of the line*/
             while (fscanf(fPtr, "%d %d %c", &row, &col, &body) != EOF) {
-                /* Create a new struct pointer*/
-                snakeBody *snakeBody = malloc(sizeof(snakeBody));
+
+                /* Malloc the structS*/
+                snakeBody = malloc(sizeof(*snakeBody));
                 /* Insert the values into the struct*/
-                snakeBody->row = row;
-                snakeBody->col = col;
+                snakeBody->row = row + 1;
+                snakeBody->col = col + 1;
                 snakeBody->body = body;
                 /* Insert the struct into the linked list*/
-                insertLast(snake, (void*)snakeBody);
+                insertStart(snake, (void*)snakeBody);
             }
         } else {
             /* Row and column couldn't be found, so throw error*/
             printf("ERROR: File format incorrect\n");
-            list = NULL:
+            snake = NULL;
         }
+        fclose(fPtr);
     }
     /* Close the file and set the file pointer to NULL*/
-    fclose(fPtr);
     fPtr = NULL;
 
-    return list;
+    return snake;
 }

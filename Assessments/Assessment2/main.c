@@ -22,9 +22,10 @@ PURPOSE : The main function of the program. Takes command line input and malloc'
 */
 int main(int args, char **argv) {
 
+    int i;
     /* Row and column int pointers, to hold the information from the input file*/
-    int *col_map = 0;
-    int *row_map = 0;
+    int *col_map, *row_map;
+    int col = 0, row = 0;
 
     /* Variable to hold the amount of food needed to win*/
     int foodNum;
@@ -53,18 +54,29 @@ int main(int args, char **argv) {
         } else {
         
             /* Recieve a linked list from the readFile function, which has been filled with the starting data*/
+            row_map = &row;
+            col_map = &col;
+            
             snake = readFile(fileName, row_map, col_map);
 
-            /* Call the createGame function, which will initialise the map, and add the borders*/
-            createGame(*row_map, *col_map, map, snake);
+                if (snake != NULL) {
+                /* Allocate the memory for the map array*/
+                map = malloc((row + 2) * sizeof(char*));
+                for (i = 0; i < row + 2; i++) {
+                    map[i] = malloc((col + 2) * sizeof(char));
+                }
 
-            /* Call the logic function, which controls all of the game movement and logic*/
-            logic(map, snake, *row_map, *col_map, foodNum);
+                /* Call the createGame function, which will initialise the map, and add the borders*/
+                createGame(row, col, map, snake);
 
-            /* Free the map array*/
-            freeMap(map, *row_map);
+                /* Call the logic function, which controls all of the game movement and logic*/
+                logic(map, snake, row + 2, col + 2, foodNum);
 
-            /* Free the snake linked list*/
+                /* Free the map array*/
+                freeMap(map, *row_map);
+            }
+
+             /* Free the snake linked list*/
             freeLinkedList(snake, &freeList);
         }
     }
@@ -79,3 +91,8 @@ int main(int args, char **argv) {
 }
 
 void freeList(void *data) {}
+
+void stringList(void *data) {
+    snakeBody *tmp = (snakeBody*)data;
+    printf("%d, %d, %c", tmp->row, tmp->col, tmp->body);
+}

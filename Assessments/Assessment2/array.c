@@ -4,10 +4,13 @@
  * File Name: array.c                                                *
  * Purpose: To intialise the map, and place the food *
  * *******************************************************************/
+#include <stdlib.h>
+#include <stdio.h>
 #include "random.h"
 #include "array.h"
 #include "LinkedList.h"
 #include "main.h"
+
 
 /*
 SUBMODULE : createGame
@@ -16,23 +19,8 @@ EXPORT : None
 PURPOSE : To run the subsequent methods for array initialisation and food placement.
 */
 void createGame(int row, int col, char **map, LinkedList *snake) {
-    allocateMap(map, row, col);
     createBorder(row, col, map);
-    placeFood(row, col, map, LinkedList *snake);
-}
-
-/* 
-SUBMODULE: allocateMap
-IMPORT: map (char**), row (int), col (int)
-EXPORT: None
-PURPOSE: To allocate the memory needed for the map
-*/
-void allocateMap(char **map, int row, int col) {
-    int i;
-    map = malloc((row + 2) * sizeof(char *));
-    for (i = o; i < row + 2; i++) {
-        map[i] = malloc((col + 2) * sizeof(char));
-    }
+    placeFood(row, col, map, snake);
 }
 
 /*
@@ -97,18 +85,22 @@ void placeFood(int row, int col, char** map, LinkedList *snake) {
     /* Exit variable for do-while loop. 0 = don't exit, 1 = exit*/
     int exit = 1;
 
+    /* Temporary list node and snake body to hold data*/
+    ListNode *currentNode;
+    snakeBody *bodyNode;
+
     /* Generates coordinates for food placement, ensuring it is not placed on a border, or the snake*/
     do {
         randR = random(1, row);
         randC = random(1, col);
 
         /*  Extracts the current node from the snake, starting at the head*/
-        ListNode *currentNode = snake->head;
+        currentNode = snake->head;
         /* Loop until end of snake is reached*/
         while (currentNode != NULL || exit == 0) {
 
             /* Create a temporary struct to manipulate the data in the value of the current node*/
-            snakeBody *bodyNode = currentNode->value;
+            bodyNode = currentNode->value;
 
             /* Check if the randomly generated row and column clash with snake coordinates*/
             if (randR == bodyNode->row || randC == bodyNode->col) {

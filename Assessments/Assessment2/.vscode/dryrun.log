@@ -1,11 +1,7 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory '/home/samuel/Documents/UCP/Assessments/Assessment2'
-gcc -c main.c -Wall -Werror -ansi -pedantic -g
-gcc -c array.c -Wall -Werror -ansi -pedantic -g
-gcc -c random.c -Wall -Werror -ansi -pedantic -g
 gcc -c game.c -Wall -Werror -ansi -pedantic -g
 gcc -c terminal.c -Wall -Werror -ansi -pedantic -g
- 
 gcc -c LinkedList.c -Wall -Werror -ansi -pedantic -g
 gcc -c input.c -Wall -Werror -ansi -pedantic -g
 gcc main.o array.o random.o game.o terminal.o LinkedList.o input.o -o snake

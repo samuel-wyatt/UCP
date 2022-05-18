@@ -9,7 +9,7 @@
       "stopAtEntry": false,
       "cwd": "/home/samuel/Documents/UCP/Assessments/Assessment2",
       "environment": [],
-      "program": "/home/samuel/Documents/UCP/Assessments/Assessment2/build/Debug/outDebug",
+      "program": "/home/samuel/Documents/UCP/Assessments/Assessment2/snake",
       "internalConsoleOptions": "openOnSessionStart",
       "MIMode": "gdb",
       "miDebuggerPath": "/usr/bin/gdb",
