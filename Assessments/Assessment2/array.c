@@ -2,21 +2,51 @@
  * Author: Samuel Wyatt                                              *
  * Date: 16/04/2022                                                  *
  * File Name: array.c                                                *
- * Purpose: To intialise the map and snake array, and place the food *
+ * Purpose: To intialise the map, and place the food *
  * *******************************************************************/
 #include "random.h"
 #include "array.h"
+#include "LinkedList.h"
+#include "main.h"
 
 /*
 SUBMODULE : createGame
-IMPORT : row (int), col (int), snakeLength (int), map (char**), snake (int**)
+IMPORT : row (int), col (int), map (char**), snake (LinkedList*)
 EXPORT : None
 PURPOSE : To run the subsequent methods for array initialisation and food placement.
 */
-void createGame(int row, int col, int snakeLength, char **map, int **snake) {
+void createGame(int row, int col, char **map, LinkedList *snake) {
+    allocateMap(map, row, col);
     createBorder(row, col, map);
-    placeFood(row, col, snakeLength, map);
-    createSnake(snakeLength, map, snake);
+    placeFood(row, col, map, LinkedList *snake);
+}
+
+/* 
+SUBMODULE: allocateMap
+IMPORT: map (char**), row (int), col (int)
+EXPORT: None
+PURPOSE: To allocate the memory needed for the map
+*/
+void allocateMap(char **map, int row, int col) {
+    int i;
+    map = malloc((row + 2) * sizeof(char *));
+    for (i = o; i < row + 2; i++) {
+        map[i] = malloc((col + 2) * sizeof(char));
+    }
+}
+
+/*
+SUBMODULE: freeMap
+IMPORT: map (char**), row (int)
+EXPORT: None
+PURPOSE: To free the memory used by the map
+*/
+void freeMap(char **map, int row) {
+    int i;
+    for (i = 0; i < row + 2; i++) {
+        free(map[i]);
+    }
+    free(map);
 }
 
 /*
@@ -56,39 +86,42 @@ void createBorder(int row, int col, char **map) {
 
 /*
 SUBMODULE : placeFood
-IMPORT : row (int), col (int), snakeLength (int), map (char**)
+IMPORT : row (int), col (int), map (char**)
 EXPORT : None
 PURPOSE : To utilise random.c to create two random integers, the row and col elements for the food.
 */
-void placeFood(int row, int col, int snakeLength, char** map) {
+void placeFood(int row, int col, char** map, LinkedList *snake) {
     /* Initialise variables*/
-    int randR, randC;
+    int randR, randC; 
+    
+    /* Exit variable for do-while loop. 0 = don't exit, 1 = exit*/
+    int exit = 1;
 
     /* Generates coordinates for food placement, ensuring it is not placed on a border, or the snake*/
-    randR = random(1, row);
-    if (randR == 1) {
-        randC = random((snakeLength + 1), col);
-    } else {
+    do {
+        randR = random(1, row);
         randC = random(1, col);
-    }
+
+        /*  Extracts the current node from the snake, starting at the head*/
+        ListNode *currentNode = snake->head;
+        /* Loop until end of snake is reached*/
+        while (currentNode != NULL || exit == 0) {
+
+            /* Create a temporary struct to manipulate the data in the value of the current node*/
+            snakeBody *bodyNode = currentNode->value;
+
+            /* Check if the randomly generated row and column clash with snake coordinates*/
+            if (randR == bodyNode->row || randC == bodyNode->col) {
+                /* If yes, do not exit the do-while, and the row and col will be re-calulated*/
+                exit = 0;
+            } else {
+                /* If no, exit both loops*/
+                exit = 1;
+            }
+            currentNode = currentNode->next;
+        }
+    } while (exit == 0);
+
     /*Replace that coordinate with @*/
     map[randR][randC] = FOOD;
-}
-
-void createSnake(int snakeLength, char **map, int **snake) {
-    int i;
-    int number = 1;
-
-    /* Fills each element of snake with the coordinates for the snake on the map array in its initial location*/
-    for (i = snakeLength - 1; i > -1; i--) {
-        snake[i][0] = 1;
-        snake[i][1] = number;
-        number++;
-    }
-    /*Fills the elements of column 3, which contain an integer representation of the character type of that section of snake*/
-    snake[0][2] = 62;
-    for (i = 1; i < snakeLength - 1; i++) {
-        snake[i][2] = 45;
-    }
-    snake[snakeLength - 1][2] = 35;
 }

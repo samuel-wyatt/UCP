@@ -12,6 +12,7 @@
 #include "game.h"
 #include "main.h"
 #include "LinkedList.h"
+#include "input.h"
 
 /*
 SUBMODULE : main
@@ -20,116 +21,61 @@ EXPORT : (int)
 PURPOSE : The main function of the program. Takes command line input and malloc's arrays.
 */
 int main(int args, char **argv) {
-    /* Initiailise variables*/
-    LinkedList *list;
-    FILE *fp;
-    int row_map, col_map, proceed = 0, i, foodNum, snake_length = 4;
-    int col_snake, row_snake;
-    char bodyType;
+
+    /* Row and column int pointers, to hold the information from the input file*/
+    int *col_map = 0;
+    int *row_map = 0;
+
+    /* Variable to hold the amount of food needed to win*/
+    int foodNum;
+
+    /* Variable to hold to file name from the command line input*/
     char *fileName;
+
+    /* LinkedList to hold the information about the snake*/
+    LinkedList *snake;
+
+    /* 2d char array to hold the map*/
     char **map = NULL;
-    int **snake = NULL;
 
-
-    /* Check for correct usage*/
-    if (args < 4) {
-        printf("USAGE: ./snake <row_map> <col_map> <snake_length>\n");
+    /* Print usage message if not enough arguments are provided*/
+    if (args < 3) {
+        printf("USAGE: ./snake <fileName.txt> <foodAmount>\n");
     } else {
 
-        /* Call initRandom*/
-        initRandom();
-
-        /* Assign command line input to variables*/
+        /* Extract the file name and food amount from the command line arguments*/
         fileName = argv[1];
         foodNum = atoi(argv[2]);
-        
-        fp = fopen(fileName, "r");
-        if (fp == NULL) {
-            printf("ERROR: Failed to open %s", fileName);
+
+        /* If food amount is below two, print message and skip file input*/
+        if (foodNum < 2) {
+            printf("ERROR: Food amount must be two or greater\n");
         } else {
-            fscanf(fp, "%d %d", &row_map, &col_map);
-            while (fscanf(fp, "%d %d %c", &row_snake, &col_snake, &bodyType) > 0) {
-                snakeBody *snakeBody = malloc(sizeof(snakeBody));
-                snakeBody->col = col_snake;
-                snakeBody->row = row_snake;
-                snakeBody->body = bodyType;
-                insertLast(list, snakeBody);
-            }
-        }
-        printLinkedList(list, &printList);
-
-
         
-        /* Checks if col_map and row_map are within correct bounds*/
-        if (row_map < 5) {
-            printf("ERROR: Row length must be 5 or greater\n");
-            proceed = -1;
+            /* Recieve a linked list from the readFile function, which has been filled with the starting data*/
+            snake = readFile(fileName, row_map, col_map);
+
+            /* Call the createGame function, which will initialise the map, and add the borders*/
+            createGame(*row_map, *col_map, map, snake);
+
+            /* Call the logic function, which controls all of the game movement and logic*/
+            logic(map, snake, *row_map, *col_map, foodNum);
+
+            /* Free the map array*/
+            freeMap(map, *row_map);
+
+            /* Free the snake linked list*/
+            freeLinkedList(snake, &freeList);
         }
-        if (col_map < 5) {
-            printf("ERROR: Column length must be 5 or greater\n");
-            proceed = -1;
-        }
-        if (foodNum > 2) {
-            printf("ERROR: Food amount to win must be 2 or greater\n");
-            proceed = -1;
-        }
+    }
+    /* Set all pointers to NULL*/
+    fileName = NULL;
+    snake = NULL;
+    col_map = NULL;
+    row_map = NULL;
+    map = NULL;
 
-        proceed = -1;
-        /* Exits the program if any errors have been encountered*/
-        if (proceed != -1) {
-
-            /* Initialise the linked list*/
-            list = createLinkedList();
-
-            /*Initialise 2d array*/
-            map = malloc((row_map + 2) * sizeof(char *));
-            for (i = 0; i < row_map + 2; i++) {
-                map[i] = malloc((col_map + 2) * sizeof(char));
-            }
-            /* Check if memory allocation failed*/
-            if (map == NULL) {
-                printf("ERROR: Memory allocation failed");
-                return 1;   
-            }
-
-            /* Create the map and place the food*/
-            createGame(row_map, col_map, snake_length, map, snake);
-
-            /*Begin the game logic*/
-            logic(map, snake, row_map + 2, col_map + 2, snake_length);
-            
-            /* Free map array*/
-            for (i = 0; i < row_map + 2; i++) {
-                free(map[i]);
-            }
-            free(map);
-
-            /* Free snake array*/
-            for (i = 0; i < snake_length; i++) {
-                free(snake[i]);
-            }
-            free(snake);
-
-            /* Free Linked List*/
-            freeLinkedList(list, &freeList);
-
-            /* Set pointer to NULL*/
-            map = NULL;
-            snake = NULL;
-        }
-    }    
-    return 0;   
+    return 1;
 }
 
-void printList(void *data) {
-    snakeBody *tmp = (snakeBody*)data;
-    printf("Row: %d, Col: %d, Character: %c", tmp->row, tmp->col, tmp->body);
-}
-
-void freeList(void *data) {
-    snakeBody *tmp = (snakeBody*)data;
-    tmp->col = -1;
-    tmp->row = -1;
-    tmp->body = '~';
-    tmp = NULL;
-}
+void freeList(void *data) {}

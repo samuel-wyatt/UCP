@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include "terminal.h"
 #include "game.h"
+#include "LinkedList.h"
+#include "main.h"
 
 /**********************************
 * ASCII Values for the characters *
@@ -26,20 +28,23 @@ IMPORT : map (char**), snake (int**), row (int), col (int), snakeLength (int)
 EXPORT : None
 PURPOSE : Controls the movement of the snake.
 */
-void logic(char **map, int **snake, int row, int col, int snakeLength) {
+void logic(char **map, LinkedList *snake, int row, int col, int foodNum) {
     /*Initialise variables*/
     char direction;
     int msgNum = 0;
     int *msg = &msgNum;
     int gameOver = 0;
-    int tailIdx = snakeLength - 1;
+    int tailIdx = size(snake) - 1;
     int i;
 
     /* Start loop for gameplay*/
     do {
         /* Replaces the areas on the map with the new snake*/
-        for (i = tailIdx; i > -1; i--) {
-            map[snake[i][0]][snake[i][1]] = (char)snake[i][2];
+        ListNode *currentNode = snake->head;
+        do {
+            snakeBody *bodyElement = currentNode->value;
+            map[bodyElement->row][bodyElement->col] = bodyElement->body;
+            currentNode = currentNode->next;
         }
         
         /* Prints the map*/
@@ -58,6 +63,9 @@ void logic(char **map, int **snake, int row, int col, int snakeLength) {
         direction = input();
        
         /* Switch case for the direction. Checks if user is attempting to move backwards, and calls relevant function if not*/
+        ListNode *headNode = snake->head;
+        snakeBody *headElement = headNode->value;
+        char headChar = headElement->body;
         switch(direction) {
             case 'w':
                 if (snake[0][2] != 118) {

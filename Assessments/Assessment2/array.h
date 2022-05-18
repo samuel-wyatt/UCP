@@ -9,9 +9,12 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 
-void createGame(int row, int col, int snakeLength, char **map, int **snake);
-void placeFood(int row, int col, int snakeLength, char **map);
+#include "LinkedList.h"
+
+void createGame(int row, int col, char **map, LinkedList *snake);
+void allocateMap(char **map, int row, int col);
+void freeMap(char **map, int row);
+void placeFood(int row, int col, char **map);
 void createBorder(int row, int col, char **map);
-void createSnake(int snakeLength, char **map, int **snake);
 
 #endif
