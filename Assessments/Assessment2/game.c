@@ -11,9 +11,6 @@
 #include "LinkedList.h"
 #include "main.h"
 #include "array.h"
-
-#include "random.h"
-
 /*
 SUBMODULE : logic
 IMPORT : map (char**), snake (int**), row (int), col (int), snakeLength (int)
@@ -95,7 +92,7 @@ void logic(char **map, LinkedList *snake, int row, int col, int foodNum) {
             break;
         }
         if (*foodCountPtr > tmpFood && *foodCountPtr != foodNum) {
-            placeFood(row - 2, col - 2, map, snake);
+            placeFood(row - 2, col - 2, map);
         }
 
     } while (foodCounter != foodNum);
