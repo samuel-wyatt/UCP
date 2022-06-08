@@ -14,11 +14,7 @@ int** readFile(char *fileName, int *rowPtr, int *colPtr)
     /* FILE pointer*/
     FILE *fPtr;
     /* Number of rows and columns*/
-    int row = 0, col = 0;
     int i, ii, jj;
-
-    rowPtr = &row;
-    colPtr = &col;
 
     /* Open the file in read mode*/
     fPtr = fopen(fileName, "r");
@@ -31,19 +27,19 @@ int** readFile(char *fileName, int *rowPtr, int *colPtr)
     } else
     {
         /* Scan the first two numbers in the file, the row and column size of the matrix*/
-        if (fscanf(fPtr, "%d %d", &row, &col) == 2)
+        if (fscanf(fPtr, "%d %d", rowPtr, colPtr) == 2)
         {
             /* Allocate the 2d array*/
-            gameState = malloc(row * sizeof(int*));
-            for (i = 0; i < row; i++)
+            gameState = malloc(*rowPtr * sizeof(int*));
+            for (i = 0; i < *rowPtr; i++)
             {
-                gameState[i] = malloc(col * sizeof(int));
+                gameState[i] = malloc(*colPtr * sizeof(int));
             }
 
             /* Read each number from the file*/
-            for (ii = 0; ii < row; ii++)
+            for (ii = 0; ii < *rowPtr; ii++)
             {
-                for (jj = 0; jj < col; jj++)
+                for (jj = 0; jj < *colPtr; jj++)
                 {
                     fscanf(fPtr, "%d", &gameState[ii][jj]);
                 }

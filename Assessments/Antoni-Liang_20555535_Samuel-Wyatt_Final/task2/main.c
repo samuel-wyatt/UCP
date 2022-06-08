@@ -11,15 +11,15 @@
 int main(int argc, char **argv)
 {
     /* Name of the file*/
-    char *fileName;
+    char *fileName = NULL;
     /* Number of cycles the game should do*/
-    int cycleNum;
+    int cycleNum = 0;
     /* 2d array to hold the state of the game*/
-    int **gameState;
-    int i;
+    int **gameState = NULL;
+    int i, row = 0, col = 0;
     /* int pointers to hold the amount of rows and columns*/
-    int *rowPtr = NULL;
-    int *colPtr = NULL;
+    int *rowPtr = &row;
+    int *colPtr = &col;
 
     /* Check if there are the correct amount of arguments*/
     if (argc < 3 || argc > 3 )
