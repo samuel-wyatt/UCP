@@ -1,6 +1,6 @@
 /*********
  * Author: Samuel Wyatt
- * Date: 14/06/2022
+ * Date: 09/06/2022
  * File Name: main.c
  * Purpose: To receive command line arguments, call relevant functions.
  * *******/
@@ -8,6 +8,13 @@
 #include <stdlib.h>
 #include "input.h"
 #include "game.h"
+
+/*
+SUBMODULE: main
+IMPORT: argc (int), argv (char**)
+EXPORT: (int)
+PURPOSE: To handle the command line arguments, and call relevant functions.
+*/
 int main(int argc, char **argv)
 {
     /* Name of the file*/

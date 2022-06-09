@@ -5,11 +5,11 @@
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
-      "args": ["beacon.txt", 1],
+      "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
       "cwd": "/home/samuel/Documents/UCP/Assessments/Antoni-Liang_20555535_Samuel-Wyatt_Final/task2",
-      "program": "/home/samuel/Documents/UCP/Assessments/Antoni-Liang_20555535_Samuel-Wyatt_Final/task2/life",
+      "program": "/home/samuel/Documents/UCP/Assessments/Antoni-Liang_20555535_Samuel-Wyatt_Final/task2/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

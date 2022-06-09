@@ -1,12 +1,18 @@
 /*********
  * Author: Samuel Wyatt
- * Date: 14/06/2022
+ * Date: 09/06/2022
  * File Name: input.c
  * Purpose: To read the input file and create the relevant array.
  * *******/
 #include <stdio.h>
 #include <stdlib.h>
 
+/*
+SUBMODULE: readFile
+IMPORT: fileName (char*), rowPtr (int*), colPtr (int*)
+EXPORT: gameState (int**)
+PURPOSE: To read an inut file, and store the contents in a 2d int array.
+*/
 int** readFile(char *fileName, int *rowPtr, int *colPtr)
 {
     /* 2d array of ints to hold the game state*/
